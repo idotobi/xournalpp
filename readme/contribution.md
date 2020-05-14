@@ -55,3 +55,37 @@ In case you still want to quickly test an hypothesis, simply sprinkle `g_message
 Compile, run from cli, and just follow the output in the commandline while interacting with xournalpp.
 
 
+## VSCode
+
+Recommended plugins:
+ * `ms-vscode.cpptools`
+ * `ms-vscode.cmake-tools`
+ * `eamodio.gitlens`
+
+ ### Settings
+
+ My settings under `Preferences: Open Settings (JSON)`:
+
+ ```json
+ {
+    "cmake.configureOnOpen": false,
+    "cmake.buildArgs": [
+        "-j 3"
+    ],
+    "[cpp]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "C_Cpp.clang_format_fallbackStyle": "LLVM",
+    "window.zoomLevel": 0,
+    "editor.formatOnSave": true,
+    "debug.toolBarLocation": "docked"
+}
+ ```
+
+### Build using cmake
+
+    F7 -> CMake: Build
+
+### Start Debugging Session
+
+    Ctrl + F5 -> CMake: Debug
