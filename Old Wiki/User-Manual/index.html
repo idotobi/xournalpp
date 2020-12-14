@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>User Manual - Xournalpp-test</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "User Manual";
+    var mkdocs_page_input_path = "Old Wiki/User-Manual.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Xournalpp-test</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">Old Wiki</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../">Welcome to MkDocs</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../Coding-conventions/">Coding conventions</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../Frequently-Asked-Questions-%26-Problem-Solving/">Frequently Asked Questions & Problem Solving</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../Git-Diff-Filter-for-Xournal/">Git Diff Filter for Xournal</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../Home/">Home</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../How-to-provide-debug-info-for-input-related-bugs/">How to provide debug info for input related bugs</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../Installing/">Installing from source</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../Pen-eraser-button-issues/">Pen eraser button issues</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">User Manual</a>
+    <ul class="current">
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../_Sidebar_Install_instructions/">Usage</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Xournalpp-test</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Old Wiki &raquo;</li>
+        
+      
+    
+    <li>User Manual</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p>This manual is a draft and a work in progress. If you have the time you can help write some paragraphs ;-)</p>
+<h1 id="introduction">Introduction</h1>
+<p>Xournal++ is a notetaking and PDF annotation tool that is based on Xournal but written from scratch in C++, using GTK3 instead of GTK2. It supports pressure sensitive pens (e.g. Wacom), text input, image input, LaTeX formula entry as well as a number of other useful features such as shape recognition and layers.</p>
+<p>Feel free to report any bugs you encounter or make feature requests on our <a href="https://github.com/xournalpp/xournalpp/issues">Issue Tracker</a>. You're also welcome to <a href="https://github.com/xournalpp/xournalpp/pulls">submit pull requests</a>.</p>
+<h1 id="getting-started">Getting Started</h1>
+<p>Although Xournal++ is designed to be intuitive and simple to use, we realize that setting it up and getting used to all of the options is non-trivial. Here, we'll briefly outline how Xournal++ is used and how it should be set up. If you're a first time user, we strongly recommend that you read this section in its entirely before using Xournal++.</p>
+<h2 id="general-usage">General Usage</h2>
+<p>A typical Xournal++ workflow looks like the following:
+1. Use the <code>File</code> menu to load an existing Xournal++ project, create a new document, or load a PDF file.
+2. Annotate or markup the document using one of the tools in the toolbar, such as the Stroke tool, the Text tool, or the Image tool.
+3. Save periodically.
+4. If needed, export the document as a PDF file by selecting <code>File &gt; Export as PDF</code> in the menu. You can also export in more formats or export custom page ranges using <code>File &gt; Save As...</code>.</p>
+<p>Once you are ready to begin editing a document, you can draw strokes and add objects using some of the <a href="#tools">tools described below</a>.</p>
+<p>If you need more space, you can add more pages using one of the <code>Journal &gt; ...</code> options or by right clicking a page in the Page Panel (in the default layout, it is on the left side of the program).</p>
+<h2 id="scrolling-and-annotation">Scrolling and Annotation</h2>
+<p>If you edit and annotate a PDF document you may want to combine the keyboard and a Wacom tablet. In this case
+* <strong>(Cursor)</strong> use the cursor keys (up, down) for moving up and down in the document and
+* <strong>(Stylus/Wacom)</strong> use the Wacom tablet with the stylus to annotate the PDF document.
+Of course you can scroll with the stylus but sometimes you forget to return the focus from the scrollbar back to the document and then the movement of the stylus move the document instead of annotating the document at the Wacom tablet (helpful e.g. on <a href="https://github.com/xournalpp/xournalpp/releases">Operating System MacOSX with  Xounral++ - Version 1.0.18</a>). </p>
+<h2 id="customization">Customization</h2>
+<p>Xournal++ is highly customizable and has many configurable settings, as it is designed to work on a variety of devices. You can edit the settings by selecting <code>Edit &gt; Preferences</code> from the menu.</p>
+<p>For example:
+* You can try enabling the optional "Experimental Input System" (in the <code>Input System</code> tab), which fixes many input-related issues and is a better experience overall.
+* You can customize mouse/stylus/touchscreen controls.
+* You can edit how Xournal++'s interface is organized in the <code>View</code> tab.
+* You can adjust zoom and layout settings.</p>
+<h3 id="setting-up-devices">Setting up devices</h3>
+<p>One of the most important settings that you should tweak are the input settings. The options you choose are going to depend on the exact devices that you are using as well as your habits and workflow.</p>
+<p>In the <code>Input System</code> tab, you should check that your devices are properly detected by Xournal++. If you have the new input system enabled (we strongly recommend that you enable this setting), you will have the capability to assign different devices classes to your detected input devices. For example, if you have a graphical tablet, ensure that your stylus is set to a <code>Pen</code> device, not <code>Disabled</code> or <code>Mouses</code>. Otherwise, your stylus may not work or its pressure sensitivity may be disabled.</p>
+<p>If the button settings for your stylus are not working, you may want to enabled <code>Merge button events with stylus tip events</code>.</p>
+<h3 id="default-tool-buttons">Default tool buttons</h3>
+<p>In the <code>Mouse</code> and <code>Stylus</code> tabs, you can set which tools should be assigned to your button presses. For example, you may want to set the middle mouse button for the mouse to activate the hand tool, or you may want to set one of the stylus buttons to activate the eraser. When a secondary button is pressed, the activate tool will temporarily change to the selected tool until the secondary button is released.</p>
+<h3 id="touchscreen-configuration">Touchscreen Configuration</h3>
+<p>If you have a computer with a touchscreen, you will want to check out the options in the <code>Touchscreen</code> tab so that Xournal++ behaves in a way that you expect.</p>
+<p>There is a "Touch Workaround" option in the <code>Touchscreen</code> tab. By default, Xournal++ will treat touches as scrolling. If you would instead like to use the touchscreen for drawing, you should enable the "Touch Workaround". (Note: in a future version of Xournal++, the "Touch Workaround" will be renamed to "Touch Drawing", as the current "Touch Workaround" has some serious bugs).</p>
+<h3 id="cursor-configuration">Cursor Configuration</h3>
+<p>By default, the cursor for the stylus is a 1-pixel wide dot. If you would like to see a bigger cursor, you can enable the <code>Big cursor for pen</code> option in the <code>View</code> tab.</p>
+<p>If you would like to highlight the cursor positions at all times (useful for e.g. giving presentations), you can enable the <code>Highlight cursor position</code> option in the <code>View</code> tab.</p>
+<h3 id="toolbar-customization">Toolbar Customization</h3>
+<p>Additionally, you can also edit how Xournal++'s interface is organized (e.g. where buttons are, where the panels should be located) by selecting one of the options in <code>View &gt; Toolbars</code>.</p>
+<p>The configuration files are generally located at <code>$HOME/.xournalpp</code> or <code>$HOME/.config/com.github.xournalpp.xournalpp/</code> on Linux:
+ * <code>toolbar.ini</code> - it's possible to create new toolbars layouts manually and precisely.
+ * <code>colornames.ini</code> - in case you've added custom colors in your toolbar, you can add a label to them following this format:</p>
+<p><code>[custom]
+   ff00ff=4bit Magenta
+   ff00bb=Hot pink
+   ff0000=4bit Red
+   ...</code>
+   Note that this <em>six-hex-digits</em> format does not include the <code>0x</code> prefix, which is actually mandatory for <code>toolbar.ini</code>.</p>
+<p>Example: <code>COLOR(0xff00bb)</code></p>
+<h1 id="tools">Tools</h1>
+<h2 id="handwriting-tools">Handwriting Tools</h2>
+<p>The handwriting tools allow you to write on the document using a mouse or a pressure-sensitive stylus. There are three such tools: <strong>Pen</strong>, <strong>Highlighter</strong>, and <strong>Eraser</strong>.</p>
+<h3 id="pen">Pen</h3>
+<p>The <strong>Pen</strong> tool allows you to draw lines on the document. It supports mouse input, as well as pressure-sensitive styluses (e.g. with a graphics tablet).</p>
+<h3 id="highlighter">Highlighter</h3>
+<h3 id="eraser">Eraser</h3>
+<p>The <strong>Eraser</strong> tool can remove strokes or parts of strokes. It has three modes:
+1. <strong>Standard</strong>: remove parts of strokes that the cursor moves over.
+2. <strong>Whiteout</strong>: paint a white stroke.
+3. <strong>Delete Stroke</strong>: remove the entirety of any stroke that the cursor touches.</p>
+<h3 id="colors-and-thickness">Colors and Thickness</h3>
+<p>The <strong>Pen</strong> and <strong>Highlighter</strong> tools can be used to draw strokes of different colors and thicknesses.</p>
+<p>To change the color of any selected stroke or any future strokes you draw, click on one of the color buttons (in the default layout, the color buttons are at the right side of the toolbar second from the top). Besides the preset color buttons, you can also set a custom color by clicking on the <strong>Select color</strong> button.</p>
+<p>To change the thickness, press one of the thickness buttons (in the default layout, they are to the left of the color buttons).</p>
+<p>It is also possible to automatically fill in the area enclosed by a stroke; this <strong>Fill Mode</strong> can be toggled by selecting the paint bucket icon (in the default layout, it is to the left of the color buttons).</p>
+<h3 id="shapes">Shapes</h3>
+<p>The <strong>Pen</strong> and <strong>Highlighter</strong> tool can also draw shapes instead of strokes. In the default layout, you can find the <strong>Shapes Toggle Menu</strong> to the right of the <strong>Text Tool</strong> (the big "T"). The Shapes Toggle Menu will have a dropdown arrow on its right. After selecting one of the shape modes in the menu, the Pen and Highlighter will place down the selected shape instead of strokes.</p>
+<p>The selectable shapes are:</p>
+<ul>
+<li><strong>Draw Rectangle</strong>: Draws a rectangle.</li>
+<li><strong>Draw Circle</strong>: Draws a circle.</li>
+<li><strong>Draw Arrow</strong>: Draws an arrow from the initial point of contact to wherever you finish the stroke.</li>
+<li><strong>Draw Line</strong>: Draws a line.</li>
+<li><strong>Draw Coordinate System</strong>: Draws an "L" shape.</li>
+<li><strong>Draw Spline</strong>: Draws a spline through the knots you set by clicking or click-dragging. In the latter case the spline will be smooth at the corresponding knot and tangent to the direction you set. </li>
+<li><strong>Stroke Recognizer</strong>: After you finish the stroke, it will attempt to convert the stroke into one of the shape types above (it will leave the stroke as-is if it cannot).</li>
+</ul>
+<h2 id="object-tools">Object Tools</h2>
+<h3 id="text">Text</h3>
+<p>The <strong>Text</strong> tool inserts text (objects) onto the document. To do so, click anywhere on the document to begin editing. Any existing text objects can be altered by clicking on them with the text tool.</p>
+<p>A text object's color and font can be customized by clicking the corresponding buttons in the toolbar.</p>
+<h3 id="image">Image</h3>
+<p>The <strong>Image</strong> button inserts an image onto the document. Clicking on the Image button will bring up a file dialog, which will allow you to choose which image you want to insert.</p>
+<p>An image can be repositioned or resized with one of the selection tools.</p>
+<h3 id="latex">LaTeX</h3>
+<p>The <strong>LaTeX</strong> button inserts a LaTeX formula onto the document. Note that the LaTeX feature requires a working version of LaTeX to be installed on your computer (specifically, the feature needs to be able to call <code>pdflatex</code>). In addition, LaTeX <code>standalone</code> package needs to be installed, which typically requires installation of <code>texlive-latex-extra</code> or <code>texlive-standalone</code>.  On Ubuntu or similar Linux systems this means</p>
+<pre><code>sudo apt-get install texlive-latex-extra
+</code></pre>
+<p>For other operating systems you will need to consult your LaTeX installation manual on how to add the <code>standalone</code> LaTeX package.</p>
+<p>Clicking on the LaTeX button will bring up a dialog which will allow you to type in a formula. A preview will be displayed in the center of the dialog, which will updating as you type and indicate whether your formula is valid. Once you are done, you can click the OK button to insert the LaTeX onto the document; the rendered formula will appear at the center of the current page. The formula can be selected, moved scaled and edited as desired.</p>
+<h2 id="selection-and-movement-tools">Selection and Movement Tools</h2>
+<h3 id="selection">Selection</h3>
+<h3 id="vertical-space">Vertical Space</h3>
+<h3 id="hand">Hand</h3>
+<h2 id="snapping">Snapping</h2>
+<h1 id="audio-recording-and-playback">Audio Recording and Playback</h1>
+<ul>
+<li>Go to <code>Edit &gt; Preferences &gt; Audio Recording</code> and set the <code>Audio Folder</code> as well as the appropriate <code>Input Device</code> and <code>Output Device</code>.</li>
+<li>If you need to edit the recording audio gain, take a look at the preferences tab mentioned above.</li>
+</ul>
+<p><strong>Please test this new feature in advance before relying on it to work. It could contain undiscovered bugs specific to some hardware or software that we have not tested.</strong></p>
+<h2 id="usage">Usage</h2>
+<p>To record audio, first press the <strong>Start/Stop Recording</strong> button (icon: a solid red circle). Recording will begin when you create the next stroke or object and will stop when the button is pressed again. The audio playback will be attached to that object.</p>
+<p>To playback audio, use the <code>Play Object</code> tool and click on the object for which you recorded audio. You can pause and stop the playback of the audio with the buttons next to the recording button in the toolbar.</p>
+<h1 id="menu-entries">Menu Entries</h1>
+<h2 id="file">File</h2>
+<p>The <strong>File</strong> menu has the usual entries along with an <strong>Annotate PDF</strong> option which allows you to open a PDF and draw on top, and an <strong>Export PDF</strong> option that allows you to save your document as a PDF.</p>
+<h2 id="edit">Edit</h2>
+<p>The <strong>Edit</strong> menu is also pretty standard, with a <strong>Find</strong> function that allows you to search in any text, as well as a <strong>Preferences</strong> dialog.</p>
+<h2 id="view">View</h2>
+<h2 id="navigation">Navigation</h2>
+<h2 id="journal">Journal</h2>
+<p>The <strong>Journal</strong> menu allows you to configure settings for the document that is currently being edited.</p>
+<h2 id="tools_1">Tools</h2>
+<h2 id="help">Help</h2>
+<p><img alt="" src="https://github.com/xournalpp/xournalpp/blob/string_new/development/documentation/wiki/Xournalpp.png" /></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../_Sidebar_Install_instructions/" class="btn btn-neutral float-right" title="Usage">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../Pen-eraser-button-issues/" class="btn btn-neutral" title="Pen eraser button issues"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../Pen-eraser-button-issues/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../_Sidebar_Install_instructions/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

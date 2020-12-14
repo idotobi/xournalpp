@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Installing from source - Xournalpp-test</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Installing from source";
+    var mkdocs_page_input_path = "Old Wiki/Installing.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Xournalpp-test</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">Old Wiki</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../">Welcome to MkDocs</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../Coding-conventions/">Coding conventions</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../Frequently-Asked-Questions-%26-Problem-Solving/">Frequently Asked Questions & Problem Solving</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../Git-Diff-Filter-for-Xournal/">Git Diff Filter for Xournal</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../Home/">Home</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../How-to-provide-debug-info-for-input-related-bugs/">How to provide debug info for input related bugs</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Installing from source</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#dependencies">Dependencies</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#cmake">CMake</a>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../Pen-eraser-button-issues/">Pen eraser button issues</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../User-Manual/">User Manual</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../_Sidebar_Install_instructions/">Usage</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Xournalpp-test</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Old Wiki &raquo;</li>
+        
+      
+    
+    <li>Installing from source</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="installing-from-source">Installing from source</h1>
+<p>In general it's probably the most frequent way you'll install Xournal++, as there are pretty much no recent packages in repositories.</p>
+<p>First of all you should clone this repository:</p>
+<pre><code class="language-bash">git clone https://github.com/xournalpp/xournalpp.git
+cd xournalpp
+</code></pre>
+<h2 id="dependencies">Dependencies</h2>
+<p><code>readme/LinuxBuild.md</code> and other files try to document the dependencies: please update these files if you can.</p>
+<h2 id="cmake">CMake</h2>
+<p>Xournal++ is built using CMake.</p>
+<p>Here is the process of building with CMake:</p>
+<ol>
+<li>Create the build directory – this is where all of the build files will be placed.</li>
+</ol>
+<p><code>bash
+   mkdir build
+   cd build</code></p>
+<ol>
+<li>You can generate the basic configuration with</li>
+</ol>
+<p><code>bash
+   cmake ..</code></p>
+<p>If this is failing on Ubuntu/Debian, even with <code>libpoppler-private-dev</code> installed, try changing the <code>POPPLER_INCLUDE_DIR</code> cmake option from <code>"POPPLER_INCLUDE_DIR-NOTFOUND"</code> to <code>"/usr/include/poppler"</code>. This is easy to do with <code>cmake-gui</code> as below.</p>
+<p>This will cause install commands (see step 4) to install <code>/usr</code> folders by default (requires root). You can install to a local directory such as <code>~/.local</code> by setting <code>cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/.local</code></p>
+<ol>
+<li>If you'd like to customize Xournal++ configuration you can tinker with cmake <code>-D</code> parameter, but it's much more convenient to execute</li>
+</ol>
+<p><code>bash
+   cmake-gui ..</code></p>
+<p>Here you can configure all aspects of Xournal++ build.
+   <img alt="cmake-gui" src="http://i.imgur.com/EYwXMuL.png" /></p>
+<p>There are few configuration categories (grouping can be activated with <code>Grouped</code> checkbox):
+   - <strong>ENABLE</strong> – basic stable features support
+   - <strong>UNSTABLE</strong> – unstable, in development features
+   - <strong>DEV</strong> – development options, which in most cases should be leaved as they are
+   - <strong>TEST</strong> – optional features of CppUnit tests
+   - <strong>BUILD</strong> – build dependency libraries and link them statically
+   - <strong>EXT</strong> – add dependency basing on precompiled deb packages (UNIX only)
+   - <strong>PATH</strong> – here you can specify alternative location of these binaries</p>
+<p>Some of these categories, or some single settings can be unavailable from beginning – they may depend on some other config flags (i.e., to enable entire <code>TEST</code> group, first of all you have to enable <code>ENABLE_CPPUNIT</code>)</p>
+<p>It's worth mentioning that there are also some hidden options that are shown when <code>Advanced</code> is checked. However, don't modify them if you don't know what they can do, or else it will result in unexpected behavior (please don't report bugs if you've made such changes or you've been specifically asked to in a bug report).</p>
+<p>All custom options are listed in <code>README</code> file under <code>cmake</code> directory.</p>
+<p>After making all changes you should click <code>Generate</code> button to generate Makefiles. In the console you can see all configuration steps and at the ending some general info about used features.</p>
+<p>Now you can close cmake-gui.</p>
+<ol>
+<li>Now it's time for real building :)</li>
+</ol>
+<p>To do this you have just to execute <code>cmake --build .</code> in the build directory. You can also specify a specific target using <code>cmake --build . --target &lt;target&gt;</code>:
+   - <strong>xournalpp</strong> – main executable (found in <code>build/src</code> dir)
+   - <strong>xournal-thumbnailer</strong> – thumbnailer used to extract thumbnails from .xoj files (found in <code>build/src/xoj-preview-extractor</code>)
+   - <strong>xournalpp-test</strong> – CppUnit testing binary, which should be executed after any kind of source edit (found in <code>build/test</code>)</p>
+<p>Other binary targets are used for internal building support:
+   - <strong>xournalpp-core</strong> – used by <code>xournalpp</code> and <code>xournalpp-test</code> targets
+   - <strong>util</strong> – util static library (from path <code>src/util</code>) used by <code>xournalpp</code> and <code>xournalpp-test</code> targets</p>
+<p>If you have multicore processor you can build with <code>make -jN</code> where N is number of simultaneous jobs.</p>
+<ol>
+<li>To install entire package execute, you first need to compile it:</li>
+</ol>
+<p><code>bash
+   cmake --build .</code></p>
+<p>Then you can install it with (if you need sudo, be careful--it may create files with root permissions in the build directory)
+   <code>bash
+   cmake --build . --target install</code></p>
+<p>It'll install all needed files (of course without <code>xournalpp-test</code>) including desktop files and translations.</p>
+<h1 id="building-a-pull-request">Building a pull request</h1>
+<p>First, you need to find the URL of the repository of the PR. You can do this by going to the PR page and looking for <code>XXX wants to merge N commits into xournalpp:master from YYY</code>. The <code>YYY</code> part should have the format <code>Username:Branchname</code>.</p>
+<p>Then, you can checkout the PR with</p>
+<pre><code class="language-bash">git clone https://github.com/Username/xournalpp -b Branchname
+</code></pre>
+<p>where you will need to replace <code>Username</code> and <code>Branchname</code> with the ones you just found.</p>
+<p>Afterwards, you can compile and install Xournal++ like above.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Pen-eraser-button-issues/" class="btn btn-neutral float-right" title="Pen eraser button issues">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../How-to-provide-debug-info-for-input-related-bugs/" class="btn btn-neutral" title="How to provide debug info for input related bugs"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../How-to-provide-debug-info-for-input-related-bugs/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../Pen-eraser-button-issues/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
