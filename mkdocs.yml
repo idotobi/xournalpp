@@ -1,2 +1,9 @@
 site_name: Xournalpp-test
-theme: readthedocs
+site_description: "A docs test"
+site_author: "idotobi"
+site_url: "https://idotobi.github.io/xournalpp/"
+docs_dir: dev-docs/
+repo_name: "idotobi/xournalpp"
+repo_url: "https://github.com/idotobi/xournalpp"
+theme:
+  name: "material"
