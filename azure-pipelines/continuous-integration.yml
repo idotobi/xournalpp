@@ -9,6 +9,7 @@ trigger:
     exclude:
       - po/xournalpp.pot
       - po/*.po
+      - docs
 
 
 stages:
