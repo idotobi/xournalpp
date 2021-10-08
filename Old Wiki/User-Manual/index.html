@@ -1,0 +1,588 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A docs test">
+      
+      
+        <link rel="canonical" href="https://idotobi.github.io/xournalpp/Old%20Wiki/User-Manual/">
+      
+      
+        <meta name="author" content="idotobi">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.0">
+    
+    
+      
+        <title>User Manual - Xournalpp-test</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.bc7e593a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab28b872.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#introduction" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://idotobi.github.io/xournalpp/" title="Xournalpp-test" class="md-header-nav__button md-logo" aria-label="Xournalpp-test">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Xournalpp-test
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              User Manual
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/idotobi/xournalpp/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    idotobi/xournalpp
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://idotobi.github.io/xournalpp/" title="Xournalpp-test" class="md-nav__button md-logo" aria-label="Xournalpp-test">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Xournalpp-test
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/idotobi/xournalpp/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    idotobi/xournalpp
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." class="md-nav__link">
+      Test
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Old Wiki
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Old Wiki" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        Old Wiki
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" class="md-nav__link">
+      Welcome to MkDocs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Coding-conventions/" class="md-nav__link">
+      Coding conventions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Frequently-Asked-Questions-%26-Problem-Solving/" class="md-nav__link">
+      Frequently Asked Questions & Problem Solving
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Git-Diff-Filter-for-Xournal/" class="md-nav__link">
+      Git Diff Filter for Xournal
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Home/" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../How-to-provide-debug-info-for-input-related-bugs/" class="md-nav__link">
+      How to provide debug info for input related bugs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Installing/" class="md-nav__link">
+      Installing from source
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Pen-eraser-button-issues/" class="md-nav__link">
+      Pen eraser button issues
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      User Manual
+    </a>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../_Sidebar_Install_instructions/" class="md-nav__link">
+      Usage
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/idotobi/xournalpp/edit/master/docs/Old Wiki/User-Manual.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <p>This manual is a draft and a work in progress. If you have the time you can help write some paragraphs ;-)</p>
+<h1 id="introduction">Introduction</h1>
+<p>Xournal++ is a notetaking and PDF annotation tool that is based on Xournal but written from scratch in C++, using GTK3 instead of GTK2. It supports pressure sensitive pens (e.g. Wacom), text input, image input, LaTeX formula entry as well as a number of other useful features such as shape recognition and layers.</p>
+<p>Feel free to report any bugs you encounter or make feature requests on our <a href="https://github.com/xournalpp/xournalpp/issues">Issue Tracker</a>. You're also welcome to <a href="https://github.com/xournalpp/xournalpp/pulls">submit pull requests</a>.</p>
+<h1 id="getting-started">Getting Started</h1>
+<p>Although Xournal++ is designed to be intuitive and simple to use, we realize that setting it up and getting used to all of the options is non-trivial. Here, we'll briefly outline how Xournal++ is used and how it should be set up. If you're a first time user, we strongly recommend that you read this section in its entirely before using Xournal++.</p>
+<h2 id="general-usage">General Usage</h2>
+<p>A typical Xournal++ workflow looks like the following:
+1. Use the <code>File</code> menu to load an existing Xournal++ project, create a new document, or load a PDF file.
+2. Annotate or markup the document using one of the tools in the toolbar, such as the Stroke tool, the Text tool, or the Image tool.
+3. Save periodically.
+4. If needed, export the document as a PDF file by selecting <code>File &gt; Export as PDF</code> in the menu. You can also export in more formats or export custom page ranges using <code>File &gt; Save As...</code>.</p>
+<p>Once you are ready to begin editing a document, you can draw strokes and add objects using some of the <a href="#tools">tools described below</a>.</p>
+<p>If you need more space, you can add more pages using one of the <code>Journal &gt; ...</code> options or by right clicking a page in the Page Panel (in the default layout, it is on the left side of the program).</p>
+<h2 id="scrolling-and-annotation">Scrolling and Annotation</h2>
+<p>If you edit and annotate a PDF document you may want to combine the keyboard and a Wacom tablet. In this case
+* <strong>(Cursor)</strong> use the cursor keys (up, down) for moving up and down in the document and
+* <strong>(Stylus/Wacom)</strong> use the Wacom tablet with the stylus to annotate the PDF document.
+Of course you can scroll with the stylus but sometimes you forget to return the focus from the scrollbar back to the document and then the movement of the stylus move the document instead of annotating the document at the Wacom tablet (helpful e.g. on <a href="https://github.com/xournalpp/xournalpp/releases">Operating System MacOSX with  Xounral++ - Version 1.0.18</a>). </p>
+<h2 id="customization">Customization</h2>
+<p>Xournal++ is highly customizable and has many configurable settings, as it is designed to work on a variety of devices. You can edit the settings by selecting <code>Edit &gt; Preferences</code> from the menu.</p>
+<p>For example:
+* You can try enabling the optional "Experimental Input System" (in the <code>Input System</code> tab), which fixes many input-related issues and is a better experience overall.
+* You can customize mouse/stylus/touchscreen controls.
+* You can edit how Xournal++'s interface is organized in the <code>View</code> tab.
+* You can adjust zoom and layout settings.</p>
+<h3 id="setting-up-devices">Setting up devices</h3>
+<p>One of the most important settings that you should tweak are the input settings. The options you choose are going to depend on the exact devices that you are using as well as your habits and workflow.</p>
+<p>In the <code>Input System</code> tab, you should check that your devices are properly detected by Xournal++. If you have the new input system enabled (we strongly recommend that you enable this setting), you will have the capability to assign different devices classes to your detected input devices. For example, if you have a graphical tablet, ensure that your stylus is set to a <code>Pen</code> device, not <code>Disabled</code> or <code>Mouses</code>. Otherwise, your stylus may not work or its pressure sensitivity may be disabled.</p>
+<p>If the button settings for your stylus are not working, you may want to enabled <code>Merge button events with stylus tip events</code>.</p>
+<h3 id="default-tool-buttons">Default tool buttons</h3>
+<p>In the <code>Mouse</code> and <code>Stylus</code> tabs, you can set which tools should be assigned to your button presses. For example, you may want to set the middle mouse button for the mouse to activate the hand tool, or you may want to set one of the stylus buttons to activate the eraser. When a secondary button is pressed, the activate tool will temporarily change to the selected tool until the secondary button is released.</p>
+<h3 id="touchscreen-configuration">Touchscreen Configuration</h3>
+<p>If you have a computer with a touchscreen, you will want to check out the options in the <code>Touchscreen</code> tab so that Xournal++ behaves in a way that you expect.</p>
+<p>There is a "Touch Workaround" option in the <code>Touchscreen</code> tab. By default, Xournal++ will treat touches as scrolling. If you would instead like to use the touchscreen for drawing, you should enable the "Touch Workaround". (Note: in a future version of Xournal++, the "Touch Workaround" will be renamed to "Touch Drawing", as the current "Touch Workaround" has some serious bugs).</p>
+<h3 id="cursor-configuration">Cursor Configuration</h3>
+<p>By default, the cursor for the stylus is a 1-pixel wide dot. If you would like to see a bigger cursor, you can enable the <code>Big cursor for pen</code> option in the <code>View</code> tab.</p>
+<p>If you would like to highlight the cursor positions at all times (useful for e.g. giving presentations), you can enable the <code>Highlight cursor position</code> option in the <code>View</code> tab.</p>
+<h3 id="toolbar-customization">Toolbar Customization</h3>
+<p>Additionally, you can also edit how Xournal++'s interface is organized (e.g. where buttons are, where the panels should be located) by selecting one of the options in <code>View &gt; Toolbars</code>.</p>
+<p>The configuration files are generally located at <code>$HOME/.xournalpp</code> or <code>$HOME/.config/com.github.xournalpp.xournalpp/</code> on Linux:
+ * <code>toolbar.ini</code> - it's possible to create new toolbars layouts manually and precisely.
+ * <code>colornames.ini</code> - in case you've added custom colors in your toolbar, you can add a label to them following this format:</p>
+<p><code>[custom]
+   ff00ff=4bit Magenta
+   ff00bb=Hot pink
+   ff0000=4bit Red
+   ...</code>
+   Note that this <em>six-hex-digits</em> format does not include the <code>0x</code> prefix, which is actually mandatory for <code>toolbar.ini</code>.</p>
+<p>Example: <code>COLOR(0xff00bb)</code></p>
+<h1 id="tools">Tools</h1>
+<h2 id="handwriting-tools">Handwriting Tools</h2>
+<p>The handwriting tools allow you to write on the document using a mouse or a pressure-sensitive stylus. There are three such tools: <strong>Pen</strong>, <strong>Highlighter</strong>, and <strong>Eraser</strong>.</p>
+<h3 id="pen">Pen</h3>
+<p>The <strong>Pen</strong> tool allows you to draw lines on the document. It supports mouse input, as well as pressure-sensitive styluses (e.g. with a graphics tablet).</p>
+<h3 id="highlighter">Highlighter</h3>
+<h3 id="eraser">Eraser</h3>
+<p>The <strong>Eraser</strong> tool can remove strokes or parts of strokes. It has three modes:
+1. <strong>Standard</strong>: remove parts of strokes that the cursor moves over.
+2. <strong>Whiteout</strong>: paint a white stroke.
+3. <strong>Delete Stroke</strong>: remove the entirety of any stroke that the cursor touches.</p>
+<h3 id="colors-and-thickness">Colors and Thickness</h3>
+<p>The <strong>Pen</strong> and <strong>Highlighter</strong> tools can be used to draw strokes of different colors and thicknesses.</p>
+<p>To change the color of any selected stroke or any future strokes you draw, click on one of the color buttons (in the default layout, the color buttons are at the right side of the toolbar second from the top). Besides the preset color buttons, you can also set a custom color by clicking on the <strong>Select color</strong> button.</p>
+<p>To change the thickness, press one of the thickness buttons (in the default layout, they are to the left of the color buttons).</p>
+<p>It is also possible to automatically fill in the area enclosed by a stroke; this <strong>Fill Mode</strong> can be toggled by selecting the paint bucket icon (in the default layout, it is to the left of the color buttons).</p>
+<h3 id="shapes">Shapes</h3>
+<p>The <strong>Pen</strong> and <strong>Highlighter</strong> tool can also draw shapes instead of strokes. In the default layout, you can find the <strong>Shapes Toggle Menu</strong> to the right of the <strong>Text Tool</strong> (the big "T"). The Shapes Toggle Menu will have a dropdown arrow on its right. After selecting one of the shape modes in the menu, the Pen and Highlighter will place down the selected shape instead of strokes.</p>
+<p>The selectable shapes are:</p>
+<ul>
+<li><strong>Draw Rectangle</strong>: Draws a rectangle.</li>
+<li><strong>Draw Circle</strong>: Draws a circle.</li>
+<li><strong>Draw Arrow</strong>: Draws an arrow from the initial point of contact to wherever you finish the stroke.</li>
+<li><strong>Draw Line</strong>: Draws a line.</li>
+<li><strong>Draw Coordinate System</strong>: Draws an "L" shape.</li>
+<li><strong>Draw Spline</strong>: Draws a spline through the knots you set by clicking or click-dragging. In the latter case the spline will be smooth at the corresponding knot and tangent to the direction you set. </li>
+<li><strong>Stroke Recognizer</strong>: After you finish the stroke, it will attempt to convert the stroke into one of the shape types above (it will leave the stroke as-is if it cannot).</li>
+</ul>
+<h2 id="object-tools">Object Tools</h2>
+<h3 id="text">Text</h3>
+<p>The <strong>Text</strong> tool inserts text (objects) onto the document. To do so, click anywhere on the document to begin editing. Any existing text objects can be altered by clicking on them with the text tool.</p>
+<p>A text object's color and font can be customized by clicking the corresponding buttons in the toolbar.</p>
+<h3 id="image">Image</h3>
+<p>The <strong>Image</strong> button inserts an image onto the document. Clicking on the Image button will bring up a file dialog, which will allow you to choose which image you want to insert.</p>
+<p>An image can be repositioned or resized with one of the selection tools.</p>
+<h3 id="latex">LaTeX</h3>
+<p>The <strong>LaTeX</strong> button inserts a LaTeX formula onto the document. Note that the LaTeX feature requires a working version of LaTeX to be installed on your computer (specifically, the feature needs to be able to call <code>pdflatex</code>). In addition, LaTeX <code>standalone</code> package needs to be installed, which typically requires installation of <code>texlive-latex-extra</code> or <code>texlive-standalone</code>.  On Ubuntu or similar Linux systems this means</p>
+<pre><code>sudo apt-get install texlive-latex-extra
+</code></pre>
+<p>For other operating systems you will need to consult your LaTeX installation manual on how to add the <code>standalone</code> LaTeX package.</p>
+<p>Clicking on the LaTeX button will bring up a dialog which will allow you to type in a formula. A preview will be displayed in the center of the dialog, which will updating as you type and indicate whether your formula is valid. Once you are done, you can click the OK button to insert the LaTeX onto the document; the rendered formula will appear at the center of the current page. The formula can be selected, moved scaled and edited as desired.</p>
+<h2 id="selection-and-movement-tools">Selection and Movement Tools</h2>
+<h3 id="selection">Selection</h3>
+<h3 id="vertical-space">Vertical Space</h3>
+<h3 id="hand">Hand</h3>
+<h2 id="snapping">Snapping</h2>
+<h1 id="audio-recording-and-playback">Audio Recording and Playback</h1>
+<ul>
+<li>Go to <code>Edit &gt; Preferences &gt; Audio Recording</code> and set the <code>Audio Folder</code> as well as the appropriate <code>Input Device</code> and <code>Output Device</code>.</li>
+<li>If you need to edit the recording audio gain, take a look at the preferences tab mentioned above.</li>
+</ul>
+<p><strong>Please test this new feature in advance before relying on it to work. It could contain undiscovered bugs specific to some hardware or software that we have not tested.</strong></p>
+<h2 id="usage">Usage</h2>
+<p>To record audio, first press the <strong>Start/Stop Recording</strong> button (icon: a solid red circle). Recording will begin when you create the next stroke or object and will stop when the button is pressed again. The audio playback will be attached to that object.</p>
+<p>To playback audio, use the <code>Play Object</code> tool and click on the object for which you recorded audio. You can pause and stop the playback of the audio with the buttons next to the recording button in the toolbar.</p>
+<h1 id="menu-entries">Menu Entries</h1>
+<h2 id="file">File</h2>
+<p>The <strong>File</strong> menu has the usual entries along with an <strong>Annotate PDF</strong> option which allows you to open a PDF and draw on top, and an <strong>Export PDF</strong> option that allows you to save your document as a PDF.</p>
+<h2 id="edit">Edit</h2>
+<p>The <strong>Edit</strong> menu is also pretty standard, with a <strong>Find</strong> function that allows you to search in any text, as well as a <strong>Preferences</strong> dialog.</p>
+<h2 id="view">View</h2>
+<h2 id="navigation">Navigation</h2>
+<h2 id="journal">Journal</h2>
+<p>The <strong>Journal</strong> menu allows you to configure settings for the document that is currently being edited.</p>
+<h2 id="tools_1">Tools</h2>
+<h2 id="help">Help</h2>
+<p><img alt="" src="https://github.com/xournalpp/xournalpp/blob/string_new/development/documentation/wiki/Xournalpp.png" /></p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../Pen-eraser-button-issues/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Pen eraser button issues
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../_Sidebar_Install_instructions/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Usage
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.6a3d08fc.min.js"></script>
+      <script src="../../assets/javascripts/bundle.71201edf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
