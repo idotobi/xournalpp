@@ -510,6 +510,12 @@ auto ToolMenuHandler::getColorToolItems() const -> const std::vector<std::unique
 
 auto ToolMenuHandler::iconName(const char* icon) -> std::string { return iconNameHelper.iconName(icon); }
 
+void ToolMenuHandler::updateColorToolItems(const Palette& palette) {
+    for (const auto& it: this->toolbarColorItems) {
+        it->updateColor(palette);
+    }
+}
+
 void ToolMenuHandler::setDefaultNewPageType(const std::optional<PageType>& pt) {
     this->pageTypeSelectionPopup->setSelected(pt);
 }

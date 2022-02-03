@@ -13,6 +13,7 @@
 
 #include <gtk/gtk.h>  // for GtkWidget
 
+#include "gui/toolbarMenubar/model/ColorPalette.h"
 #include "util/Color.h"       // for Color
 #include "util/NamedColor.h"  // for NamedColor
 
@@ -35,6 +36,13 @@ public:
     GtkWidget* getNewToolIcon() const override;
 
     Color getColor() const;
+
+    /**
+     * @brief Update Color based on (new) palette
+     *
+     * @param palette
+     */
+    void updateColor(const Palette& palette);
 
     xoj::util::WidgetSPtr createItem(bool horizontal) override;
 

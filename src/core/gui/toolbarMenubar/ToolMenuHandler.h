@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>      // for GtkWidget, GtkWindow, GtkBuilder
 
 #include "gui/IconNameHelper.h"  // for IconNameHelper
+#include "gui/toolbarMenubar/model/ColorPalette.h"
 #include "util/raii/GObjectSPtr.h"
 
 class AbstractToolItem;
@@ -66,6 +67,13 @@ public:
      * @param horizontal whether the toolbar is horizontal
      */
     void load(const ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal);
+
+    /**
+     * @brief Update all ColorToolItems based on palette
+     *
+     * @param palette
+     */
+    void updateColorToolItems(const Palette& palette);
 
     void initToolItems();
     void addPluginItem(ToolbarButtonEntry* t);

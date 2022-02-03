@@ -567,6 +567,7 @@ public:
     void setStabilizerPreprocessor(StrokeStabilizer::Preprocessor preprocessor);
 
     const Palette& getColorPalette();
+    void setColorPalette(fs::path palettePath);
 
     void setNumberOfSpacesForTab(unsigned int numberSpaces);
     unsigned int getNumberOfSpacesForTab() const;
@@ -1152,6 +1153,8 @@ private:
      *
      */
     std::unique_ptr<Palette> palette;
+
+    std::string colorPaletteSetting;
 
 
     /**

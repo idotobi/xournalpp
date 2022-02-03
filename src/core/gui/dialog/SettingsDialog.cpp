@@ -7,25 +7,27 @@
 #include <gdk/gdk.h>      // for GdkRGBA, GdkRectangle
 #include <glib-object.h>  // for G_CALLBACK, g_signal...
 
-#include "control/AudioController.h"             // for AudioController
-#include "control/Control.h"                     // for Control
-#include "control/DeviceListHelper.h"            // for getDeviceList, Input...
-#include "control/settings/Settings.h"           // for Settings, SElement
-#include "control/settings/SettingsEnums.h"      // for STYLUS_CURSOR_ARROW
-#include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
-#include "gui/CreatePreviewImage.h"              // for createPreviewImage
-#include "gui/MainWindow.h"                      // for MainWindow
-#include "gui/XournalView.h"                     // for XournalView
-#include "gui/widgets/ZoomCallib.h"              // for zoomcallib_new, zoom...
-#include "model/PageType.h"                      // for PageType
-#include "util/Color.h"                          // for GdkRGBA_to_argb, rgb...
-#include "util/PathUtil.h"                       // for fromGFile, toGFilename
-#include "util/StringUtils.h"                    // for StringUtils
-#include "util/Util.h"                           // for systemWithMessage
-#include "util/gtk4_helper.h"                    //
-#include "util/i18n.h"                           // for _
-#include "util/raii/CairoWrappers.h"             // for CairoSurfaceSPtr
-#include "util/safe_casts.h"                     // for round_cast
+#include "control/AudioController.h"                // for AudioController
+#include "control/Control.h"                        // for Control
+#include "control/DeviceListHelper.h"               // for getDeviceList, Input...
+#include "control/settings/Settings.h"              // for Settings, SElement
+#include "control/settings/SettingsEnums.h"         // for STYLUS_CURSOR_ARROW
+#include "control/tools/StrokeStabilizerEnum.h"     // for AveragingMethod, Pre...
+#include "gui/CreatePreviewImage.h"                 // for createPreviewImage
+#include "gui/MainWindow.h"                         // for MainWindow
+#include "gui/XournalView.h"                        // for XournalView
+#include "gui/toolbarMenubar/ToolMenuHandler.h"     // for ToolMenuHandler
+#include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
+#include "gui/widgets/ZoomCallib.h"                 // for zoomcallib_new, zoom...
+#include "model/PageType.h"                         // for PageType
+#include "util/Color.h"                             // for GdkRGBA_to_argb, rgb...
+#include "util/PathUtil.h"                          // for fromGFile, toGFilename
+#include "util/StringUtils.h"                       // for StringUtils
+#include "util/Util.h"                              // for systemWithMessage
+#include "util/gtk4_helper.h"                       //
+#include "util/i18n.h"                              // for _
+#include "util/raii/CairoWrappers.h"                // for CairoSurfaceSPtr
+#include "util/safe_casts.h"                        // for round_cast
 
 #include "ButtonConfigGui.h"       // for ButtonConfigGui
 #include "DeviceClassConfigGui.h"  // for DeviceClassConfigGui
@@ -653,6 +655,27 @@ void SettingsDialog::load() {
             }
         }
 
+        {
+            auto userPalettes = Util::getConfigFile("palettes");
+            auto xPalettes = Util::getPalettePath();
+            std::vector<fs::path> paletteFilePaths{};
+            for (const fs::directory_entry& p: fs::directory_iterator(userPalettes)) {
+                paletteFilePaths.push_back(p.path());
+            }
+            for (const fs::directory_entry& p: fs::directory_iterator(xPalettes)) {
+                paletteFilePaths.push_back(p.path());
+            }
+            std::sort(paletteFilePaths.begin(), paletteFilePaths.end());
+
+            int i = 0;
+            for (const fs::path& p: paletteFilePaths) {
+                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(builder.get("cbColorPalette")), "", p.u8string().c_str());
+                if (p == settings->getColorPalette().getFilePath())
+                    gtk_combo_box_set_active(GTK_COMBO_BOX(builder.get("cbColorPalette")), i);
+                i++;
+            }
+        }
+
         this->audioOutputDevices = this->control->getAudioController()->getOutputDevices();
         gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(builder.get("cbAudioOutputDevice")), "", "System default");
         gtk_combo_box_set_active(GTK_COMBO_BOX(builder.get("cbAudioOutputDevice")), 0);
@@ -1029,6 +1052,9 @@ void SettingsDialog::save() {
     settings->setDefaultSeekTime(
             static_cast<unsigned int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(builder.get("spDefaultSeekTime")))));
 
+    settings->setColorPalette(
+            fs::path{gtk_combo_box_text_get_active_text(GTK_COMBO_BOX_TEXT(builder.get("cbColorPalette")))});
+
     for (auto& deviceClassConfigGui: this->deviceClassConfigs) {
         deviceClassConfigGui.saveSettings();
     }
@@ -1038,6 +1064,9 @@ void SettingsDialog::save() {
     settings->transactionEnd();
 
     this->control->getWindow()->setGtkTouchscreenScrollingForDeviceMapping();
+    this->control->getWindow()->getToolMenuHandler()->updateColorToolItems(settings->getColorPalette());
+    this->control->getWindow()->reloadToolbars();
+
     this->control->initButtonTool();
     this->control->getWindow()->getXournal()->onSettingsChanged();
 }
