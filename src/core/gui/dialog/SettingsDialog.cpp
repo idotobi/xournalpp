@@ -18,16 +18,13 @@
 #include "gui/XournalView.h"                        // for XournalView
 #include "gui/toolbarMenubar/ToolMenuHandler.h"     // for ToolMenuHandler
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
-#include "gui/widgets/ZoomCallib.h"                 // for zoomcallib_new, zoom...
-#include "model/PageType.h"                         // for PageType
-#include "util/Color.h"                             // for GdkRGBA_to_argb, rgb...
-#include "util/PathUtil.h"                          // for fromGFile, toGFilename
-#include "util/StringUtils.h"                       // for StringUtils
-#include "util/Util.h"                              // for systemWithMessage
-#include "util/gtk4_helper.h"                       //
-#include "util/i18n.h"                              // for _
-#include "util/raii/CairoWrappers.h"                // for CairoSurfaceSPtr
-#include "util/safe_casts.h"                        // for round_cast
+#include "gui/widgets/ZoomCallib.h"  // for zoomcallib_new, zoom...#include "model/PageType.h"                         // for PageType
+#include "model/PageType.h"   // for PageType
+#include "util/Color.h"       // for GdkRGBA_to_argb, rgb...
+#include "util/PathUtil.h"    // for fromGFile, toGFilename
+#include "util/Util.h"        // for systemWithMessage#include "util/gtk4_helper.h"                       //
+#include "util/i18n.h"        // for _#include "util/raii/CairoWrappers.h"                // for CairoSurfaceSPtr
+#include "util/safe_casts.h"  // for round_cast
 
 #include "ButtonConfigGui.h"       // for ButtonConfigGui
 #include "DeviceClassConfigGui.h"  // for DeviceClassConfigGui
@@ -656,19 +653,12 @@ void SettingsDialog::load() {
         }
 
         {
-            auto userPalettes = Util::getConfigFile("palettes");
-            auto xPalettes = Util::getPalettePath();
-            std::vector<fs::path> paletteFilePaths{};
-            for (const fs::directory_entry& p: fs::directory_iterator(userPalettes)) {
-                paletteFilePaths.push_back(p.path());
-            }
-            for (const fs::directory_entry& p: fs::directory_iterator(xPalettes)) {
-                paletteFilePaths.push_back(p.path());
-            }
-            std::sort(paletteFilePaths.begin(), paletteFilePaths.end());
+            std::vector<fs::path> xPaletteFilePaths = Util::listFilesSorted(Util::getPalettePath());
+            std::vector<fs::path> userPaletteFilePaths = Util::listFilesSorted(Util::getConfigFile("palettes"));
+            std::vector<fs::path> allPaletteFilePaths = this->concatenated(xPaletteFilePaths, userPaletteFilePaths);
 
             int i = 0;
-            for (const fs::path& p: paletteFilePaths) {
+            for (const fs::path& p: allPaletteFilePaths) {
                 gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(builder.get("cbColorPalette")), "", p.u8string().c_str());
                 if (p == settings->getColorPalette().getFilePath())
                     gtk_combo_box_set_active(GTK_COMBO_BOX(builder.get("cbColorPalette")), i);
@@ -1069,4 +1059,11 @@ void SettingsDialog::save() {
 
     this->control->initButtonTool();
     this->control->getWindow()->getXournal()->onSettingsChanged();
+}
+
+auto SettingsDialog::concatenated(std::vector<fs::path> p1, std::vector<fs::path> p2) -> std::vector<fs::path> {
+    std::vector<fs::path> result{};
+    result.insert(result.end(), p1.begin(), p1.end());
+    result.insert(result.end(), p2.begin(), p2.end());
+    return result;
 }

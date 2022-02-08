@@ -17,7 +17,8 @@
 #include "util/Color.h"       // for Color
 #include "util/NamedColor.h"  // for NamedColor
 
-#include "AbstractToolItem.h"
+#include "AbstractToolItem.h"  // for AbstractToolItem
+#include "gui/toolbarMenubar/model/ColorPalette.h"
 
 class ActionDatabase;
 
