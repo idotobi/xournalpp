@@ -31,6 +31,8 @@
 class Control;
 class Settings;
 
+struct Palette;
+
 class SettingsDialog {
 public:
     SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control,
@@ -90,8 +92,15 @@ private:
     LanguageConfigGui languageConfig;
     std::vector<std::unique_ptr<ButtonConfigGui>> buttonConfigs;
     std::vector<DeviceClassConfigGui> deviceClassConfigs;
+    std::vector<fs::path> allPaletteFilePaths;
 
     LatexSettingsPanel latexPanel;
+    std::string getSelectedPalette(GtkListBoxRow* listBoxRow);
+    GtkWidget* newErrorListBoxRow(const fs::path& palettePath, const std::string& error) const;
+    GtkWidget* newColorPaletteTextBox(const std::string& mainContent, const std::string& additionalInfo) const;
+    GtkWidget* newPaletteColorsBox(const Palette& palette) const;
+    GtkWidget* newPaletteListBoxRow(Palette& palette) const;
+    void createPaletteTab();
 
     std::function<void()> callback;
 };

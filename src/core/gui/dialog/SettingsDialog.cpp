@@ -7,16 +7,17 @@
 #include <gdk/gdk.h>      // for GdkRGBA, GdkRectangle
 #include <glib-object.h>  // for G_CALLBACK, g_signal...
 
-#include "control/AudioController.h"                // for AudioController
-#include "control/Control.h"                        // for Control
-#include "control/DeviceListHelper.h"               // for getDeviceList, Input...
-#include "control/settings/Settings.h"              // for Settings, SElement
-#include "control/settings/SettingsEnums.h"         // for STYLUS_CURSOR_ARROW
-#include "control/tools/StrokeStabilizerEnum.h"     // for AveragingMethod, Pre...
-#include "gui/CreatePreviewImage.h"                 // for createPreviewImage
-#include "gui/MainWindow.h"                         // for MainWindow
-#include "gui/XournalView.h"                        // for XournalView
-#include "gui/toolbarMenubar/ToolMenuHandler.h"     // for ToolMenuHandler
+#include "control/AudioController.h"             // for AudioController
+#include "control/Control.h"                     // for Control
+#include "control/DeviceListHelper.h"            // for getDeviceList, Input...
+#include "control/settings/Settings.h"           // for Settings, SElement
+#include "control/settings/SettingsEnums.h"      // for STYLUS_CURSOR_ARROW
+#include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
+#include "gui/CreatePreviewImage.h"              // for createPreviewImage
+#include "gui/MainWindow.h"                      // for MainWindow
+#include "gui/XournalView.h"                     // for XournalView
+#include "gui/toolbarMenubar/ToolMenuHandler.h"  // for ToolMenuHandler
+#include "gui/toolbarMenubar/icon/ColorIcon.h"
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "gui/widgets/ZoomCallib.h"  // for zoomcallib_new, zoom...#include "model/PageType.h"                         // for PageType
 #include "model/PageType.h"   // for PageType
@@ -652,19 +653,7 @@ void SettingsDialog::load() {
             }
         }
 
-        {
-            std::vector<fs::path> xPaletteFilePaths = Util::listFilesSorted(Util::getPalettePath());
-            std::vector<fs::path> userPaletteFilePaths = Util::listFilesSorted(Util::getConfigFile("palettes"));
-            std::vector<fs::path> allPaletteFilePaths = this->concatenated(xPaletteFilePaths, userPaletteFilePaths);
-
-            int i = 0;
-            for (const fs::path& p: allPaletteFilePaths) {
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(builder.get("cbColorPalette")), "", p.u8string().c_str());
-                if (p == settings->getColorPalette().getFilePath())
-                    gtk_combo_box_set_active(GTK_COMBO_BOX(builder.get("cbColorPalette")), i);
-                i++;
-            }
-        }
+        createPaletteTab();
 
         this->audioOutputDevices = this->control->getAudioController()->getOutputDevices();
         gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(builder.get("cbAudioOutputDevice")), "", "System default");
@@ -700,6 +689,131 @@ void SettingsDialog::load() {
     }
 
     this->latexPanel.load(settings->latexSettings);
+}
+
+std::string pathLink(const fs::path& path) { return FS(_F("<a href=\"file://{1}\">{1}</a>") % path.c_str()); }
+
+void SettingsDialog::createPaletteTab() {
+    gtk_label_set_label(GTK_LABEL(builder.get("colorPaletteExplainLabel")),
+                        FS(_F("<i>The palettes shown below are obtained from:\n"
+                              "   - Built-in palettes: {1}\n"
+                              "   - User palettes: {2}.\n</i>") %
+                           pathLink(Util::getPalettePath()) % pathLink(Util::getConfigFile("palettes")))
+                                .c_str());
+    gtk_label_set_use_markup(GTK_LABEL(builder.get("colorPaletteExplainLabel")), true);
+    std::vector<fs::path> xPaletteFilePaths = Util::listFilesSorted(Util::getPalettePath());
+    std::vector<fs::path> userPaletteFilePaths = Util::listFilesSorted(Util::getConfigFile("palettes"));
+    this->allPaletteFilePaths = concatenated(xPaletteFilePaths, userPaletteFilePaths);
+
+
+    GtkListBox* lb = GTK_LIST_BOX(builder.get("paletteListBox"));
+    if (allPaletteFilePaths.empty()) {
+        GtkWidget* label = gtk_label_new("<span foreground=\"red\">"
+                                         "No palette files (i.e. with extension .gpl) could be found.\n"
+                                         "Using the default until another palette is configured."
+                                         "</span>");
+        gtk_label_set_use_markup(GTK_LABEL(label), true);
+        gtk_widget_show(label);
+        gtk_list_box_prepend(lb, label);
+        return;
+    }
+    for (const fs::path& p: allPaletteFilePaths) {
+        Palette palette{p};
+        GtkWidget* listBoxRow;
+        try {
+            palette.load();
+            listBoxRow = newPaletteListBoxRow(palette);
+            g_object_set_data(G_OBJECT(listBoxRow), "path", (gpointer)&p);
+            gtk_list_box_prepend(lb, listBoxRow);
+        } catch (const std::exception& e) {
+            listBoxRow = newErrorListBoxRow(p, e.what());
+            g_object_set_data(G_OBJECT(listBoxRow), "path", (gpointer)&p);
+            gtk_list_box_prepend(lb, listBoxRow);
+        }
+
+
+        if (p == settings->getColorPalette().getFilePath())
+            gtk_list_box_select_row(GTK_LIST_BOX(lb), GTK_LIST_BOX_ROW(listBoxRow));
+    }
+}
+
+std::string colorize(const std::string& text, const std::string& color) {
+    return std::string{"<span foreground=\""} + color + std::string{"\">"} + text + std::string{"</span>"};
+}
+
+GtkWidget* SettingsDialog::newErrorListBoxRow(const fs::path& palettePath, const std::string& error) const {
+    GtkWidget* listBoxRow = gtk_list_box_row_new();
+    GtkWidget* rowContent = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
+    gtk_widget_set_name(rowContent, "RowContent");
+    gtk_container_add(GTK_CONTAINER(listBoxRow), rowContent);
+
+    std::string formattedError = colorize("Error: " + error, "red");
+    GtkWidget* text = newColorPaletteTextBox(formattedError, palettePath);
+    gtk_box_pack_start(GTK_BOX(rowContent), text, false, false, 0);
+
+    gtk_widget_show(rowContent);
+    gtk_widget_show(listBoxRow);
+
+    return listBoxRow;
+}
+
+GtkWidget* SettingsDialog::newPaletteListBoxRow(Palette& palette) const {
+    GtkWidget* listBoxRow = gtk_list_box_row_new();
+    GtkWidget* rowContent = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
+    gtk_container_add(GTK_CONTAINER(listBoxRow), rowContent);
+
+    std::string paletteName = palette.getHeader(std::string{"Name"});
+    GtkWidget* text;
+    if (paletteName.empty())
+        text = newColorPaletteTextBox(std::string{"<i>Palette has no Name</i>"}, palette.getFilePath());
+    else
+        text = newColorPaletteTextBox(paletteName, palette.getFilePath());
+    gtk_box_pack_start(GTK_BOX(rowContent), text, false, false, 0);
+
+    GtkWidget* colors = newPaletteColorsBox(palette);
+    gtk_box_pack_start(GTK_BOX(rowContent), colors, true, true, 0);
+
+    gtk_widget_show(rowContent);
+    gtk_widget_show(listBoxRow);
+
+    return listBoxRow;
+}
+
+GtkWidget* SettingsDialog::newPaletteColorsBox(const Palette& palette) const {
+    GtkWidget* colors = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
+    for (int i = 0; i < palette.size(); i++) {
+        const NamedColor namedColor = palette.getColorAt(i);
+        const Color c = namedColor.getColor();
+        GtkWidget* icon = ColorIcon::newGtkImage(c, 16, true);
+        gtk_widget_show(icon);
+        gtk_box_pack_start(GTK_BOX(colors), icon, false, false, 0);
+    }
+    gtk_widget_show(colors);
+    gtk_widget_set_halign(colors, GTK_ALIGN_END);
+    return colors;
+}
+GtkWidget* SettingsDialog::newColorPaletteTextBox(const string& mainContent, const std::string& additionalInfo) const {
+    GtkWidget* textBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 3);
+    gtk_widget_show(textBox);
+
+    GtkWidget* mainLabel = gtk_label_new(mainContent.c_str());
+    gtk_widget_set_halign(mainLabel, GTK_ALIGN_START);
+    gtk_label_set_use_markup(GTK_LABEL(mainLabel), true);
+    gtk_box_pack_start(GTK_BOX(textBox), mainLabel, false, false, 0);
+    gtk_widget_show(mainLabel);
+
+    std::string secondaryInformation = std::string{"└─ "} + additionalInfo;
+    GtkWidget* secondaryLabel = gtk_label_new(colorize(secondaryInformation, "gray").c_str());
+    gtk_widget_set_halign(secondaryLabel, GTK_ALIGN_START);
+    gtk_label_set_use_markup(GTK_LABEL(secondaryLabel), true);
+    gtk_box_pack_start(GTK_BOX(textBox), secondaryLabel, false, false, 0);
+    gtk_widget_show(secondaryLabel);
+
+    return textBox;
+}
+
+auto SettingsDialog::getSelectedPalette(GtkListBoxRow* listBoxRow) -> std::string {
+    return ((fs::path*)g_object_get_data(G_OBJECT(listBoxRow), "path"))->u8string();
 }
 
 void SettingsDialog::save() {
@@ -1042,11 +1156,8 @@ void SettingsDialog::save() {
     settings->setDefaultSeekTime(
             static_cast<unsigned int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(builder.get("spDefaultSeekTime")))));
 
-    gchar* selected_colorPalette = gtk_combo_box_text_get_active_text(GTK_COMBO_BOX_TEXT(builder.get("cbColorPalette")));
-    if (selected_colorPalette) {
-        settings->setColorPalette(fs::path{selected_colorPalette});
-    }
-    g_free(selected_colorPalette);
+    GtkListBoxRow* selected_listbox_row = gtk_list_box_get_selected_row(GTK_LIST_BOX(builder.get("paletteListBox")));
+    settings->setColorPalette(fs::path{getSelectedPalette(selected_listbox_row)});
 
     for (auto& deviceClassConfigGui: this->deviceClassConfigs) {
         deviceClassConfigGui.saveSettings();
