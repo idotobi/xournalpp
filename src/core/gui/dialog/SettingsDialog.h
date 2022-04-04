@@ -19,7 +19,6 @@
 
 #include "audio/DeviceInfo.h"                    // for DeviceInfo
 #include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
-#include "filesystem.h"                          // for path
 #include "gui/Builder.h"
 #include "util/raii/GtkWindowUPtr.h"
 
@@ -27,6 +26,8 @@
 #include "DeviceClassConfigGui.h"
 #include "LanguageConfigGui.h"
 #include "LatexSettingsPanel.h"
+#include "SettingsDialogPaletteTab.h"
+#include "filesystem.h"  // for path
 
 class Control;
 class Settings;
@@ -76,7 +77,6 @@ private:
 
     void showStabilizerAvMethodOptions(StrokeStabilizer::AveragingMethod method);
     void showStabilizerPreprocessorOptions(StrokeStabilizer::Preprocessor preprocessor);
-    std::vector<fs::path> concatenated(std::vector<fs::path> p1, std::vector<fs::path> p2);
 
 private:
     Settings* settings = nullptr;
@@ -92,15 +92,9 @@ private:
     LanguageConfigGui languageConfig;
     std::vector<std::unique_ptr<ButtonConfigGui>> buttonConfigs;
     std::vector<DeviceClassConfigGui> deviceClassConfigs;
-    std::vector<fs::path> allPaletteFilePaths;
 
     LatexSettingsPanel latexPanel;
-    std::string getSelectedPalette(GtkListBoxRow* listBoxRow);
-    GtkWidget* newErrorListBoxRow(const fs::path& palettePath, const std::string& error) const;
-    GtkWidget* newColorPaletteTextBox(const std::string& mainContent, const std::string& additionalInfo) const;
-    GtkWidget* newPaletteColorsBox(const Palette& palette) const;
-    GtkWidget* newPaletteListBoxRow(Palette& palette) const;
-    void createPaletteTab();
+    SettingsDialogPaletteTab paletteTab;
 
     std::function<void()> callback;
 };
