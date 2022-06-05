@@ -14,11 +14,11 @@
 #include <gtk/gtk.h>  // for GtkWidget
 
 #include "gui/toolbarMenubar/model/ColorPalette.h"
+#include "gui/toolbarMenubar/model/ColorPalette.h"
 #include "util/Color.h"       // for Color
 #include "util/NamedColor.h"  // for NamedColor
 
 #include "AbstractToolItem.h"  // for AbstractToolItem
-#include "gui/toolbarMenubar/model/ColorPalette.h"
 
 class ActionDatabase;
 

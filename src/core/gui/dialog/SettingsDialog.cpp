@@ -50,7 +50,8 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
         window(GTK_WINDOW(builder.get(UI_DIALOG_NAME))),
         languageConfig(gladeSearchPath, builder.get("hboxLanguageSelect"), settings),
         latexPanel(gladeSearchPath),
-        paletteTab(GTK_LABEL(builder.get("colorPaletteExplainLabel")), GTK_LIST_BOX(builder.get("paletteListBox"))),
+        paletteTab(GTK_LABEL(builder.get("colorPaletteExplainLabel")), GTK_LIST_BOX(builder.get("paletteListBox")),
+                   std::vector<fs::path>{Util::getPalettePath(), Util::getConfigFile("palettes")}),
         callback(callback) {
 
     gtk_box_append(GTK_BOX(builder.get("zoomVBox")), callib);
