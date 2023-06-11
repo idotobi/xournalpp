@@ -24,9 +24,8 @@
 
 #include "gui/IconNameHelper.h"  // for IconNameHelper
 #include "gui/toolbarMenubar/model/ColorPalette.h"
-#include "util/raii/GObjectSPtr.h"
-#include "gui/toolbarMenubar/model/ColorPalette.h"
 #include "util/Color.h"  // for Color
+#include "util/raii/GObjectSPtr.h"
 
 class AbstractToolItem;
 class GladeGui;
