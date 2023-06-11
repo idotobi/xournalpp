@@ -1,20 +1,20 @@
 #include "XournalMain.h"
 
-#include <algorithm>  // for copy, sort, max
-#include <array>      // for array
+#include <algorithm>                         // for copy, sort, max
+#include <array>                             // for array
 #include <chrono>     // for time_point, duration, hours...
-#include <clocale>    // for setlocale, LC_NUMERIC
-#include <cstdio>     // for printf
-#include <cstdlib>    // for exit, size_t
-#include <exception>  // for exception
-#include <iostream>   // for operator<<, endl, basic_...
-#include <locale>     // for locale
-#include <memory>     // for unique_ptr, allocator
-#include <optional>   // for optional, nullopt
-#include <sstream>    // for stringstream
-#include <stdexcept>  // for runtime_error
-#include <string>     // for string, basic_string
-#include <vector>     // for vector
+#include <clocale>                           // for setlocale, LC_NUMERIC
+#include <cstdio>                            // for printf
+#include <cstdlib>                           // for exit, size_t
+#include <exception>                         // for exception
+#include <iostream>                          // for operator<<, endl, basic_...
+#include <locale>                            // for locale
+#include <memory>                            // for unique_ptr, allocator
+#include <optional>                          // for optional, nullopt
+#include <sstream>                           // for stringstream
+#include <stdexcept>                         // for runtime_error
+#include <string>                            // for string, basic_string
+#include <vector>                            // for vector
 
 #include <gio/gio.h>      // for GApplication, G_APPLICATION
 #include <glib-object.h>  // for G_CALLBACK, g_signal_con...
@@ -42,12 +42,12 @@
 #include "util/XojMsgBox.h"                  // for XojMsgBox
 #include "util/i18n.h"                       // for _, FS, _F
 
-#include "Control.h"       // for Control
-#include "ExportHelper.h"  // for exportImg, exportPdf
-#include "config-dev.h"    // for ERRORLOG_DIR
-#include "config-git.h"    // for GIT_BRANCH, GIT_ORIGIN_O...
-#include "config.h"        // for GETTEXT_PACKAGE, ENABLE_NLS
-#include "filesystem.h"    // for path, operator/, exists
+#include "Control.h"                         // for Control
+#include "ExportHelper.h"                    // for exportImg, exportPdf
+#include "config-dev.h"                      // for ERRORLOG_DIR
+#include "config-git.h"                      // for GIT_BRANCH, GIT_ORIGIN_O...
+#include "config.h"                          // for GETTEXT_PACKAGE, ENABLE_NLS
+#include "filesystem.h"                      // for path, operator/, exists
 
 namespace {
 
@@ -70,8 +70,6 @@ auto migrateSettings() -> MigrateResult;
 
 void checkForErrorlog();
 void checkForEmergencySave(Control* control);
-
-void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFile, bool failIfNotFound = true);
 
 void initCAndCoutLocales() {
     /**
@@ -487,8 +485,8 @@ void on_startup(GApplication* application, XMPtr app_data) {
     const MigrateResult migrateResult = migrateSettings();
 
     app_data->gladePath = std::make_unique<GladeSearchpath>();
-    initResourcePath(app_data->gladePath.get(), "ui/about.glade");
-    initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
+    XournalMain::initResourcePath(app_data->gladePath.get(), "ui/about.glade");
+    XournalMain::initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
 
     app_data->control = std::make_unique<Control>(application, app_data->gladePath.get(), app_data->disableAudio);
 
@@ -730,4 +728,37 @@ auto XournalMain::run(int argc, char** argv) -> int {
     auto rv = g_application_run(G_APPLICATION(app), argc, argv);
     g_object_unref(app);
     return rv;
+}
+
+void XournalMain::initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFile, bool failIfNotFound) {
+    auto uiPath = findResourcePath(relativePathAndFile);  // i.e.  relativePathAndFile = "ui/about.glade"
+
+    if (!uiPath.empty()) {
+        gladePath->addSearchDirectory(uiPath);
+        return;
+    }
+
+    // -----------------------------------------------------------------------
+
+    fs::path p = Util::getDataPath();
+    p /= relativePathAndFile;
+
+    if (fs::exists(p)) {
+        gladePath->addSearchDirectory(p.parent_path());
+        return;
+    }
+
+    std::string msg =
+            FS(_F("<span foreground='red' size='x-large'>Missing the needed UI file:\n<b>{1}</b></span>\nCould "
+                  "not find them at any location.\n  Not relative\n  Not in the Working Path\n  Not in {2}") %
+               relativePathAndFile % Util::getDataPath().string());
+
+    if (!failIfNotFound) {
+        msg += _("\n\nWill now attempt to run without this file.");
+    }
+    XojMsgBox::showErrorToUser(nullptr, msg);
+
+    if (failIfNotFound) {
+        exit(12);
+    }
 }

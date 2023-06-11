@@ -42,7 +42,7 @@ constexpr auto UI_FILE = "settings.glade";
 constexpr auto UI_DIALOG_NAME = "settingsDialog";
 
 SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control,
-                               std::function<void()> callback):
+                               const std::vector<fs::path>& paletteDirectories, std::function<void()> callback):
         settings(settings),
         control(control),
         callib(zoomcallib_new()),
@@ -51,7 +51,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
         languageConfig(gladeSearchPath, builder.get("hboxLanguageSelect"), settings),
         latexPanel(gladeSearchPath),
         paletteTab(GTK_LABEL(builder.get("colorPaletteExplainLabel")), GTK_LIST_BOX(builder.get("paletteListBox")),
-                   std::vector<fs::path>{Util::getPalettePath(), Util::getConfigFile("palettes")}),
+                   paletteDirectories),
         callback(callback) {
 
     gtk_box_append(GTK_BOX(builder.get("zoomVBox")), callib);

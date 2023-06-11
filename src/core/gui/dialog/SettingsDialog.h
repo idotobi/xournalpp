@@ -37,13 +37,12 @@ struct Palette;
 class SettingsDialog {
 public:
     SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control,
-                   std::function<void()> callback);
+                   const std::vector<fs::path>& paletteDirectories, std::function<void()> callback);
 
     inline GtkWindow* getWindow() const { return window.get(); }
-
-private:
     void save();
 
+private:
     void setDpi(int dpi);
 
     /**
