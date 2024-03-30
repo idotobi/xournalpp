@@ -1140,7 +1140,12 @@ void Settings::save() {
     SAVE_DOUBLE_PROP(stabilizerMass);
     SAVE_BOOL_PROP(stabilizerCuspDetection);
     SAVE_BOOL_PROP(stabilizerFinalizeStroke);
+
+    if (this->palette == nullptr) {
+        setColorPalette(Util::getPalettePath() / DEFAULT_PALETTE_FILE);
+    }
     saveProperty("colorPalette", this->palette->getFilePath().u8string().c_str(), root);
+
     /**/
 
     SAVE_BOOL_PROP(latexSettings.autoCheckDependencies);
