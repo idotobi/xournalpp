@@ -1,37 +1,37 @@
 #include "SettingsDialog.h"
 
-#include <algorithm>  // for max
-#include <cstddef>  // for NULL, size_t
+#include <algorithm>    // for max
+#include <cstddef>      // for NULL, size_t
 #include <type_traits>  // for __underlying_type_im...
 
-#include <gdk/gdk.h>  // for GdkRGBA, GdkRectangle
+#include <gdk/gdk.h>      // for GdkRGBA, GdkRectangle
 #include <glib-object.h>  // for G_CALLBACK, g_signal...
 
-#include "control/AudioController.h"  // for AudioController
-#include "control/Control.h"  // for Control
-#include "control/DeviceListHelper.h"  // for getDeviceList, Input...
-#include "control/settings/Settings.h"  // for Settings, SElement
-#include "control/settings/SettingsEnums.h"  // for STYLUS_CURSOR_ARROW
+#include "control/AudioController.h"             // for AudioController
+#include "control/Control.h"                     // for Control
+#include "control/DeviceListHelper.h"            // for getDeviceList, Input...
+#include "control/settings/Settings.h"           // for Settings, SElement
+#include "control/settings/SettingsEnums.h"      // for STYLUS_CURSOR_ARROW
 #include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
-#include "gui/CreatePreviewImage.h"  // for createPreviewImage
-#include "gui/MainWindow.h"  // for MainWindow
-#include "gui/XournalView.h"  // for XournalView
+#include "gui/CreatePreviewImage.h"              // for createPreviewImage
+#include "gui/MainWindow.h"                      // for MainWindow
+#include "gui/XournalView.h"                     // for XournalView
 #include "gui/toolbarMenubar/ToolMenuHandler.h"  // for ToolMenuHandler
 #include "gui/toolbarMenubar/icon/ColorIcon.h"
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "gui/widgets/ZoomCallib.h"  // for zoomcallib_new, zoom...#include "model/PageType.h"                         // for PageType
 #include "model/PageType.h"   // for PageType
-#include "util/Color.h"  // for GdkRGBA_to_argb, rgb...
-#include "util/PathUtil.h"  // for fromGFile, toGFilename
-#include "util/Util.h"  // for systemWithMessage#include "util/gtk4_helper.h"                       //
-#include "util/i18n.h"  // for _#include "util/raii/CairoWrappers.h"                // for CairoSurfaceSPtr
+#include "util/Color.h"       // for GdkRGBA_to_argb, rgb...
+#include "util/PathUtil.h"    // for fromGFile, toGFilename
+#include "util/Util.h"        // for systemWithMessage#include "util/gtk4_helper.h"                       //
+#include "util/i18n.h"        // for _#include "util/raii/CairoWrappers.h"                // for CairoSurfaceSPtr
 #include "util/safe_casts.h"  // for round_cast
 
-#include "ButtonConfigGui.h"  // for ButtonConfigGui
+#include "ButtonConfigGui.h"       // for ButtonConfigGui
 #include "DeviceClassConfigGui.h"  // for DeviceClassConfigGui
 #include "LanguageConfigGui.h"     // for LanguageConfigGui
 #include "LatexSettingsPanel.h"    // for LatexSettingsPanel
-#include "filesystem.h"  // for is_directory
+#include "filesystem.h"            // for is_directory
 
 class GladeSearchpath;
 
