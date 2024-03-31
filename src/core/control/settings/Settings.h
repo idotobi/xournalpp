@@ -567,8 +567,8 @@ public:
     void setStabilizerAveragingMethod(StrokeStabilizer::AveragingMethod averagingMethod);
     void setStabilizerPreprocessor(StrokeStabilizer::Preprocessor preprocessor);
 
-    const Palette& getColorPalette();
-    void setColorPalette(std::optional<fs::path> palettePath);
+    const std::optional<fs::path> getColorPaletteSetting();
+    void setColorPalette(const std::optional<fs::path>& palettePath);
 
     void setNumberOfSpacesForTab(unsigned int numberSpaces);
     unsigned int getNumberOfSpacesForTab() const;
@@ -1149,14 +1149,7 @@ private:
     StrokeStabilizer::AveragingMethod stabilizerAveragingMethod{};
     StrokeStabilizer::Preprocessor stabilizerPreprocessor{};
 
-    /**
-     * @brief Color Palette for tool colors
-     *
-     */
-    std::unique_ptr<Palette> palette;
-
-    fs::path colorPaletteSetting;
-
+    std::optional<fs::path> colorPaletteSetting;
 
     /**
      * Tab control settings

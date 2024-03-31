@@ -655,7 +655,7 @@ void SettingsDialog::load() {
             }
         }
 
-        paletteTab.renderPaletteTab(settings->getColorPalette().getFilePath());
+        paletteTab.renderPaletteTab(this->control->getPalette().getFilePath());
 
         this->audioOutputDevices = this->control->getAudioController()->getOutputDevices();
         gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(builder.get("cbAudioOutputDevice")), "", "System default");
@@ -1044,7 +1044,8 @@ void SettingsDialog::save() {
     settings->transactionEnd();
 
     this->control->getWindow()->setGtkTouchscreenScrollingForDeviceMapping();
-    this->control->getWindow()->getToolMenuHandler()->updateColorToolItems(settings->getColorPalette());
+    this->control->loadPaletteFromSettings();
+    this->control->getWindow()->getToolMenuHandler()->updateColorToolItems(this->control->getPalette());
     this->control->getWindow()->reloadToolbars();
 
     this->control->initButtonTool();

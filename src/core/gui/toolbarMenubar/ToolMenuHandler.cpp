@@ -64,7 +64,7 @@ void ToolMenuHandler::populate(const GladeSearchpath* gladeSearchPath) {
     initToolItems();
 
     auto file = gladeSearchPath->findFile("", "toolbar.ini");
-    if (!tbModel->parse(file, true, this->control->getSettings()->getColorPalette())) {
+    if (!tbModel->parse(file, true, this->control->getPalette())) {
         std::string msg = FS(_F("Could not parse general toolbar.ini file: {1}\n"
                                 "No Toolbars will be available") %
                              file.u8string());
@@ -73,7 +73,7 @@ void ToolMenuHandler::populate(const GladeSearchpath* gladeSearchPath) {
 
     file = Util::getConfigFile(TOOLBAR_CONFIG);
     if (fs::exists(file)) {
-        if (!tbModel->parse(file, false, this->control->getSettings()->getColorPalette())) {
+        if (!tbModel->parse(file, false, this->control->getPalette())) {
             string msg = FS(_F("Could not parse custom toolbar.ini file: {1}\n"
                                "Toolbars will not be available") %
                             file.u8string());
@@ -98,7 +98,8 @@ void ToolMenuHandler::unloadToolbar(GtkWidget* toolbar) {
 void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal) {
     int count = 0;
 
-    const Palette& palette = this->control->getSettings()->getColorPalette();
+    const auto palette = this->control->getPalette();
+    size_t colorIndex{};
 
     for (const ToolbarEntry& e: d->contents) {
         if (e.getName() == toolbarName) {

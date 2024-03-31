@@ -127,6 +127,7 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
     auto name = Util::getConfigFile(SETTINGS_XML_FILE);
     this->settings = new Settings(std::move(name));
     this->settings->load();
+    this->loadPaletteFromSettings();
 
     this->pageTypes = new PageTypeHandler(gladeSearchPath);
 
@@ -2378,3 +2379,22 @@ auto Control::getPageBackgroundChangeController() const -> PageBackgroundChangeC
 auto Control::getLayerController() const -> LayerController* { return this->layerController; }
 
 auto Control::getPluginController() const -> PluginController* { return this->pluginController; }
+
+auto Control::getPalette() const -> const Palette& { return *(this->palette); }
+
+auto Control::loadPaletteFromSettings() -> void {
+    const auto palettePath = this->settings->getColorPaletteSetting();
+    if (!palettePath.has_value()) {
+        this->palette->load_default();
+        return;
+    }
+
+    try {
+        auto newPalette = std::make_unique<Palette>(palettePath.value());
+        newPalette->load();
+        this->palette = std::move(newPalette);
+    } catch (const std::exception& e) {
+        this->palette->parseErrorDialog(e);
+        this->palette->load_default();
+    }
+}

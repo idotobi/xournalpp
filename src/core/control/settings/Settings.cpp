@@ -1141,10 +1141,9 @@ void Settings::save() {
     SAVE_BOOL_PROP(stabilizerCuspDetection);
     SAVE_BOOL_PROP(stabilizerFinalizeStroke);
 
-    if (this->palette == nullptr) {
-        setColorPalette(Util::getPalettePath() / DEFAULT_PALETTE_FILE);
+    if (this->colorPaletteSetting.has_value()) {
+        saveProperty("colorPalette", this->colorPaletteSetting.value().u8string().c_str(), root);
     }
-    saveProperty("colorPalette", this->palette->getFilePath().u8string().c_str(), root);
 
     /**/
 
@@ -2586,28 +2585,10 @@ void Settings::setStabilizerPreprocessor(StrokeStabilizer::Preprocessor preproce
     save();
 }
 
-/**
- * @brief Get Color Palette used for Tools
- *
- * @return Palette&
- */
-auto Settings::getColorPalette() -> const Palette& { return *(this->palette); }
 
-void Settings::setColorPalette(std::optional<fs::path> palettePath) {
-    if (!palettePath.has_value()) {
-        this->palette->load_default();
-        return;
-    }
+auto Settings::getColorPaletteSetting() -> const std::optional<fs::path> { return this->colorPaletteSetting; }
 
-    this->palette = std::make_unique<Palette>(std::move(palettePath.value()));
-
-    try {
-        this->palette->load();
-    } catch (const std::exception& e) {
-        this->palette->parseErrorDialog(e);
-        this->palette->load_default();
-    }
-}
+void Settings::setColorPalette(const std::optional<fs::path>& palettePath) { this->colorPaletteSetting = palettePath; }
 
 
 void Settings::setUseSpacesAsTab(bool useSpaces) { this->useSpacesForTab = useSpaces; }

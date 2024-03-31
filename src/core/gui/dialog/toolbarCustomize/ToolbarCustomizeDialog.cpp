@@ -68,7 +68,7 @@ constexpr auto UI_DIALOG_NAME = "DialogCustomizeToolbar";
 ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath, MainWindow* win,
                                                ToolbarDragDropHandler* handler):
         itemData(buildToolDataVector(win->getToolMenuHandler()->getToolItems())),
-        colorItemData(buildColorDataVector(handler->getControl()->getSettings()->getColorPalette())) {
+        colorItemData(buildColorDataVector(handler->getControl()->getPalette())) {
     Builder builder(gladeSearchPath, UI_FILE);
     window.reset(GTK_WINDOW(builder.get(UI_DIALOG_NAME)));
     notebook = GTK_NOTEBOOK(builder.get("notebook"));
