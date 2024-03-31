@@ -1033,7 +1033,7 @@ void SettingsDialog::save() {
     settings->setDefaultSeekTime(
             static_cast<unsigned int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(builder.get("spDefaultSeekTime")))));
 
-    settings->setColorPalette(paletteTab.getSelectedPalette());
+    settings->setColorPaletteSetting(paletteTab.getSelectedPalette());
 
     for (auto& deviceClassConfigGui: this->deviceClassConfigs) {
         deviceClassConfigGui.saveSettings();

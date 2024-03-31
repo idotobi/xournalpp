@@ -568,7 +568,7 @@ public:
     void setStabilizerPreprocessor(StrokeStabilizer::Preprocessor preprocessor);
 
     const std::optional<fs::path> getColorPaletteSetting();
-    void setColorPalette(const std::optional<fs::path>& palettePath);
+    void setColorPaletteSetting(const std::optional<fs::path>& palettePath);
 
     void setNumberOfSpacesForTab(unsigned int numberSpaces);
     unsigned int getNumberOfSpacesForTab() const;
