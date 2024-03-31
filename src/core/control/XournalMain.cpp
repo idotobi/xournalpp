@@ -414,37 +414,6 @@ auto findResourcePath(const fs::path& searchFile) -> fs::path {
     return {};
 }
 
-void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFile, bool failIfNotFound) {
-    auto uiPath = findResourcePath(relativePathAndFile);  // i.e.  relativePathAndFile = "ui/about.glade"
-
-    if (!uiPath.empty()) {
-        gladePath->addSearchDirectory(uiPath);
-        return;
-    }
-
-    // -----------------------------------------------------------------------
-
-    fs::path p = Util::getDataPath();
-    p /= relativePathAndFile;
-
-    if (fs::exists(p)) {
-        gladePath->addSearchDirectory(p.parent_path());
-        return;
-    }
-
-    std::string msg =
-            FS(_F("<span foreground='red' size='x-large'>Missing the needed UI file:\n<b>{1}</b></span>\nCould "
-                  "not find them at any location.\n  Not relative\n  Not in the Working Path\n  Not in {2}") %
-               relativePathAndFile % Util::getDataPath().string());
-
-    if (!failIfNotFound) {
-        msg += _("\n\nWill now attempt to run without this file.");
-        XojMsgBox::showErrorToUser(nullptr, msg);
-    } else {
-        XojMsgBox::showErrorAndQuit(msg, 12);
-    }
-}
-
 void on_activate(GApplication*, XMPtr) {}
 
 void on_command_line(GApplication*, GApplicationCommandLine*, XMPtr) {
@@ -755,10 +724,8 @@ void XournalMain::initResourcePath(GladeSearchpath* gladePath, const gchar* rela
 
     if (!failIfNotFound) {
         msg += _("\n\nWill now attempt to run without this file.");
-    }
-    XojMsgBox::showErrorToUser(nullptr, msg);
-
-    if (failIfNotFound) {
-        exit(12);
+        XojMsgBox::showErrorToUser(nullptr, msg);
+    } else {
+        XojMsgBox::showErrorAndQuit(msg, 12);
     }
 }
