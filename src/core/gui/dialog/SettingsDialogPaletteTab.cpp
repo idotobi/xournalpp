@@ -82,7 +82,7 @@ void SettingsDialogPaletteTab::renderColorPaletteExplainLabel() const {
                         FS(_F("<i>The palettes shown below are obtained from:\n"
                               "   - Built-in palettes: {1}\n"
                               "   - User palettes: {2}.\n</i>") %
-                           pathLink(Util::getPalettePath()) % pathLink(Util::getConfigFile("palettes")))
+                           pathLink(Util::getPalettePath()) % pathLink(Util::getConfigSubfolder("palettes")))
                                 .c_str());
     gtk_label_set_use_markup(colorPaletteExplainLabel, true);
 }

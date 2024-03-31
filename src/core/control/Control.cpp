@@ -1222,7 +1222,7 @@ void Control::showSettings() {
 
     auto dlg = xoj::popup::PopupWindowWrapper<SettingsDialog>(
             this->gladeSearchPath, settings, this,
-            std::vector<fs::path>{Util::getPalettePath(), Util::getConfigFile("palettes")},
+            std::vector<fs::path>{Util::getPalettePath(), Util::getConfigSubfolder("palettes")},
             [ctrl = this, callbackData]() {
                 Settings* settings = ctrl->getSettings();
                 MainWindow* win = ctrl->win;
