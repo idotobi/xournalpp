@@ -2587,7 +2587,9 @@ void Settings::setStabilizerPreprocessor(StrokeStabilizer::Preprocessor preproce
 
 auto Settings::getColorPaletteSetting() -> const std::optional<fs::path> { return this->colorPaletteSetting; }
 
-void Settings::setColorPaletteSetting(const std::optional<fs::path>& palettePath) { this->colorPaletteSetting = palettePath; }
+void Settings::setColorPaletteSetting(const std::optional<fs::path>& palettePath) {
+    this->colorPaletteSetting = palettePath;
+}
 
 
 void Settings::setUseSpacesAsTab(bool useSpaces) { this->useSpacesForTab = useSpaces; }
