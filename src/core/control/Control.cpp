@@ -2389,10 +2389,11 @@ auto Control::loadPaletteFromSettings() -> void {
         return;
     }
 
+    auto newPalette = std::make_unique<Palette>(palettePath.value());
+    this->palette = std::move(newPalette);
+
     try {
-        auto newPalette = std::make_unique<Palette>(palettePath.value());
-        newPalette->load();
-        this->palette = std::move(newPalette);
+        this->palette->load();
     } catch (const std::exception& e) {
         this->palette->parseErrorDialog(e);
         this->palette->load_default();
