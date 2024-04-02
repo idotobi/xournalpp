@@ -2384,12 +2384,12 @@ auto Control::getPalette() const -> const Palette& { return *(this->palette); }
 
 auto Control::loadPaletteFromSettings() -> void {
     const auto palettePath = this->settings->getColorPaletteSetting();
-    if (!palettePath.has_value()) {
+    if (palettePath.empty()) {
         this->palette->load_default();
         return;
     }
 
-    auto newPalette = std::make_unique<Palette>(palettePath.value());
+    auto newPalette = std::make_unique<Palette>(palettePath);
     this->palette = std::move(newPalette);
 
     try {

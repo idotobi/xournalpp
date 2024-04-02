@@ -15,8 +15,10 @@
 #include <glib.h>
 
 #include "gui/GladeSearchpath.h"
+class GladeSearchpath;
+
 namespace XournalMain {
 auto run(int argc, char** argv) -> int;
 
-void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFile, bool failIfNotFound = true);
+void initResourcePath(GladeSearchpath* gladePath, std::string_view relativePathAndFile, bool failIfNotFound = true);
 }  // namespace XournalMain

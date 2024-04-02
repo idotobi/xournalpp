@@ -1140,8 +1140,8 @@ void Settings::save() {
     SAVE_BOOL_PROP(stabilizerCuspDetection);
     SAVE_BOOL_PROP(stabilizerFinalizeStroke);
 
-    if (this->colorPaletteSetting.has_value()) {
-        saveProperty("colorPalette", this->colorPaletteSetting.value().u8string().c_str(), root);
+    if (!this->colorPaletteSetting.empty()) {
+        saveProperty("colorPalette", this->colorPaletteSetting.u8string().c_str(), root);
     }
 
     /**/
@@ -2585,11 +2585,9 @@ void Settings::setStabilizerPreprocessor(StrokeStabilizer::Preprocessor preproce
 }
 
 
-auto Settings::getColorPaletteSetting() -> const std::optional<fs::path> { return this->colorPaletteSetting; }
+auto Settings::getColorPaletteSetting() -> fs::path const& { return this->colorPaletteSetting; }
 
-void Settings::setColorPaletteSetting(const std::optional<fs::path>& palettePath) {
-    this->colorPaletteSetting = palettePath;
-}
+void Settings::setColorPaletteSetting(fs::path palettePath) { this->colorPaletteSetting = palettePath; }
 
 
 void Settings::setUseSpacesAsTab(bool useSpaces) { this->useSpacesForTab = useSpaces; }

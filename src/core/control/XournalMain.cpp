@@ -699,7 +699,8 @@ auto XournalMain::run(int argc, char** argv) -> int {
     return rv;
 }
 
-void XournalMain::initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFile, bool failIfNotFound) {
+void XournalMain::initResourcePath(GladeSearchpath* gladePath, std::string_view relativePathAndFile,
+                                   bool failIfNotFound) {
     auto uiPath = findResourcePath(relativePathAndFile);  // i.e.  relativePathAndFile = "ui/about.glade"
 
     if (!uiPath.empty()) {

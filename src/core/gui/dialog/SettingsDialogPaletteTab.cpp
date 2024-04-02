@@ -112,10 +112,10 @@ void SettingsDialogPaletteTab::setAllPaletteFilePaths(const std::vector<fs::path
 auto SettingsDialogPaletteTab::getSelectedPalette() -> std::optional<fs::path> {
     GtkListBoxRow* selected_listbox_row = gtk_list_box_get_selected_row(paletteListBox);
     if (allPaletteFilePaths.empty()) {
-        return std::nullopt;
+        return {};
     }
     if (!G_IS_OBJECT(selected_listbox_row)) {
-        return std::nullopt;
+        return {};
     }
 
     return getGObjectPalettePath(G_OBJECT(selected_listbox_row));

@@ -22,17 +22,17 @@
 #include <glib.h>                   // for guint
 #include <gtk/gtk.h>                // for GtkLabel
 
-#include "control/ToolEnums.h"              // for ToolSize, ToolType
-#include "control/jobs/ProgressListener.h"  // for ProgressListener
-#include "control/settings/ViewModes.h"     // for ViewModeId
-#include "control/tools/EditSelection.h"    // for OrderChange
-#include "enums/Action.enum.h"              // for Action
-#include "gui/toolbarMenubar/model/ColorPalette.h"
-#include "model/DocumentHandler.h"   // for DocumentHandler
-#include "model/DocumentListener.h"  // for DocumentListener
-#include "model/GeometryTool.h"      // for GeometryTool
-#include "model/PageRef.h"           // for PageRef
-#include "undo/UndoRedoHandler.h"    // for UndoRedoHandler (ptr only)
+#include "control/ToolEnums.h"                      // for ToolSize, ToolType
+#include "control/jobs/ProgressListener.h"          // for ProgressListener
+#include "control/settings/ViewModes.h"             // for ViewModeId
+#include "control/tools/EditSelection.h"            // for OrderChange
+#include "enums/Action.enum.h"                      // for Action
+#include "gui/toolbarMenubar/model/ColorPalette.h"  // for ColorPalette
+#include "model/DocumentHandler.h"                  // for DocumentHandler
+#include "model/DocumentListener.h"                 // for DocumentListener
+#include "model/GeometryTool.h"                     // for GeometryTool
+#include "model/PageRef.h"                          // for PageRef
+#include "undo/UndoRedoHandler.h"                   // for UndoRedoHandler (ptr only)
 
 #include "ClipboardHandler.h"  // for ClipboardListener
 #include "ToolHandler.h"       // for ToolListener

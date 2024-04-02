@@ -19,13 +19,15 @@
 #include "gui/toolbarMenubar/ToolMenuHandler.h"  // for ToolMenuHandler
 #include "gui/toolbarMenubar/icon/ColorIcon.h"
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
-#include "gui/widgets/ZoomCallib.h"  // for zoomcallib_new, zoom...#include "model/PageType.h"                         // for PageType
-#include "model/PageType.h"   // for PageType
-#include "util/Color.h"       // for GdkRGBA_to_argb, rgb...
-#include "util/PathUtil.h"    // for fromGFile, toGFilename
-#include "util/Util.h"        // for systemWithMessage#include "util/gtk4_helper.h"                       //
-#include "util/i18n.h"        // for _#include "util/raii/CairoWrappers.h"                // for CairoSurfaceSPtr
-#include "util/safe_casts.h"  // for round_cast
+#include "gui/widgets/ZoomCallib.h"                 // for zoomcallib_new, zoom...
+#include "model/PageType.h"                         // for PageType
+#include "util/Color.h"                             // for GdkRGBA_to_argb, rgb...
+#include "util/PathUtil.h"                          // for fromGFile, toGFilename
+#include "util/Util.h"                              // for systemWithMessage
+#include "util/gtk4_helper.h"                       //
+#include "util/i18n.h"                              // for _
+#include "util/raii/CairoWrappers.h"                // for CairoSurfaceSPtr
+#include "util/safe_casts.h"                        // for round_cast
 
 #include "ButtonConfigGui.h"       // for ButtonConfigGui
 #include "DeviceClassConfigGui.h"  // for DeviceClassConfigGui
@@ -1033,7 +1035,10 @@ void SettingsDialog::save() {
     settings->setDefaultSeekTime(
             static_cast<unsigned int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(builder.get("spDefaultSeekTime")))));
 
-    settings->setColorPaletteSetting(paletteTab.getSelectedPalette());
+    const std::optional<std::filesystem::path> selectedPalette = paletteTab.getSelectedPalette();
+    if (selectedPalette.has_value()) {
+        settings->setColorPaletteSetting(selectedPalette.value());
+    }
 
     for (auto& deviceClassConfigGui: this->deviceClassConfigs) {
         deviceClassConfigGui.saveSettings();
