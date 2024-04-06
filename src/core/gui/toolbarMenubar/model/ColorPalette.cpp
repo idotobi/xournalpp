@@ -110,7 +110,7 @@ auto Palette::size() const -> size_t { return namedColors.size(); }
 auto Palette::default_palette() -> const std::string {
     auto d = serdes_stream<std::stringstream>();
     d << "GIMP Palette\n"
-      << "Name: Xournal Default Palette\n"
+      << "Name: Xournal Palette\n"
       << "#\n"
       << 0 << " " << 0 << " " << 0 << " " << NC_("Color", "Black") << "\n"
       << 0 << " " << 128 << " " << 0 << " " << NC_("Color", "Green") << "\n"
