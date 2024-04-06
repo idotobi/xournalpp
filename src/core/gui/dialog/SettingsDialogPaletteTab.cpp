@@ -169,8 +169,12 @@ auto SettingsDialogPaletteTab::newPaletteTextBox(const std::string& mainContent,
     gtk_widget_show(mainLabel);
 
     std::string const secondaryInformation = std::string{"└─ "} + path.u8string();
-    GtkWidget* secondaryLabel = gtk_label_new(colorize(secondaryInformation, "gray").c_str());
+    GtkWidget* secondaryLabel = gtk_label_new(secondaryInformation.c_str());
     gtk_widget_set_halign(secondaryLabel, GTK_ALIGN_START);
+
+    GtkStyleContext* thisContext = gtk_widget_get_style_context(secondaryLabel);
+    gtk_style_context_add_class(thisContext, "secondary-label");
+
     gtk_label_set_use_markup(GTK_LABEL(secondaryLabel), true);
     gtk_box_pack_start(GTK_BOX(textBox), secondaryLabel, false, false, 0);
     gtk_widget_show(secondaryLabel);
