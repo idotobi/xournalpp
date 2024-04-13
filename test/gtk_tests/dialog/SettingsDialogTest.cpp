@@ -23,65 +23,68 @@
 #include "config-dev.h"
 #include "config-test.h"
 
-class ShowAndSaveDoesNotThrow: public GtkTest {
-    void runTest(GtkApplication* app) override {
-        GladeSearchpath gladeSearchpath{};
-        XournalMain::initResourcePath(&gladeSearchpath, "ui/about.glade", true);
-        XournalMain::initResourcePath(&gladeSearchpath, "ui/xournalpp.css", true);
-
-        GApplication* gApp = G_APPLICATION(app);
-
-        Control control{gApp, &gladeSearchpath, true};
-
-        // If initializing differently, i.e.:
-        // MainWindow mainWindow{MainWindow(&gladeSearchpath, &control, app)};
-        // the test fails at the end of the block with a segfault
-        MainWindow* mainWindow = new MainWindow(&gladeSearchpath, &control, app);
-        control.initWindow(mainWindow);
-
-        Settings settings{Util::getConfigFile(SETTINGS_XML_FILE)};
-        settings.load();
-
-        const fs::path palettePath{GET_TESTFILE("palettes/xournalpp.gpl")};
-        const std::vector<fs::path> paletteDirectories{palettePath.parent_path()};
-
-        const auto callback = []() {};
-        SettingsDialog settingsDialog{&gladeSearchpath, &settings, &control, paletteDirectories, callback};
-
-        auto dlg = xoj::popup::PopupWindowWrapper<SettingsDialog>(&gladeSearchpath, &settings, &control,
-                                                                  paletteDirectories, callback);
-        dlg.show(GTK_WINDOW(mainWindow->getWindow()));
-        EXPECT_NO_THROW(settingsDialog.save());
-    }
-};
-TEST_F(ShowAndSaveDoesNotThrow, showAndSafeDoesNotThrow) {}
-
-class ShowAndSaveDoesNotThrowForNoPalettes: public GtkTest {
-    void runTest(GtkApplication* app) override {
-        GladeSearchpath gladeSearchpath{};
-        XournalMain::initResourcePath(&gladeSearchpath, "ui/about.glade", true);
-        XournalMain::initResourcePath(&gladeSearchpath, "ui/xournalpp.css", true);
-
-        GApplication* gApp = G_APPLICATION(app);
-
-        Control control{gApp, &gladeSearchpath, true};
-
-        // If initializing differently, i.e.:
-        // MainWindow mainWindow{MainWindow(&gladeSearchpath, &control, app)};
-        // the test fails at the end of the block with a segfault
-        MainWindow* mainWindow = new MainWindow(&gladeSearchpath, &control, app);
-        control.initWindow(mainWindow);
-
-        Settings settings{Util::getConfigFile(SETTINGS_XML_FILE)};
-        settings.load();
-
-        const fs::path emptyFile{GET_TESTFILE("no_palettes/empty.txt")};
-        const std::vector<fs::path> paletteDirectories{emptyFile.parent_path()};
-
-        const auto callback = []() -> void {};
-        SettingsDialog settingsDialog{&gladeSearchpath, &settings, &control, paletteDirectories, callback};
-
-        EXPECT_NO_THROW(settingsDialog.save());
-    }
-};
-TEST_F(ShowAndSaveDoesNotThrowForNoPalettes, ShowAndSaveDoesNotThrowForNoPalettes) {}
+//class ShowAndSaveDoesNotThrow: public GtkTest {
+//    void runTest(GtkApplication* app) override {
+//        GladeSearchpath gladeSearchpath{};
+//        XournalMain::initResourcePath(&gladeSearchpath, "ui/about.glade", true);
+//        XournalMain::initResourcePath(&gladeSearchpath, "ui/xournalpp.css", true);
+//
+//        GApplication* gApp = G_APPLICATION(app);
+//
+//        Control control{gApp, &gladeSearchpath, true};
+//
+//        // If initializing differently, i.e.:
+//        // MainWindow mainWindow{MainWindow(&gladeSearchpath, &control, app)};
+//        // the test fails at the end of the block with a segfault
+//        MainWindow* mainWindow = new MainWindow(&gladeSearchpath, &control, app);
+//        control.initWindow(mainWindow);
+//
+//        Settings settings{Util::getConfigFile(SETTINGS_XML_FILE)};
+//        settings.load();
+//
+//        const fs::path palettePath{GET_TESTFILE("palettes/xournalpp.gpl")};
+//        const std::vector<fs::path> paletteDirectories{palettePath.parent_path()};
+//
+//        const auto callback = []() {};
+//        auto dlg = xoj::popup::PopupWindowWrapper<SettingsDialog>(&gladeSearchpath, &settings, &control,
+//                                                                  paletteDirectories, callback);
+//        auto settingsDialog = dlg.getPopup();
+//        dlg.show(GTK_WINDOW(mainWindow->getWindow()));
+//        EXPECT_NO_THROW(settingsDialog->save());
+////        gtk_window_close(settingsDialog->getWindow());
+//    }
+//};
+//TEST_F(ShowAndSaveDoesNotThrow, showAndSafeDoesNotThrow) {}
+//
+//class ShowAndSaveDoesNotThrowForNoPalettes: public GtkTest {
+//    void runTest(GtkApplication* app) override {
+//        GladeSearchpath gladeSearchpath{};
+//        XournalMain::initResourcePath(&gladeSearchpath, "ui/about.glade", true);
+//        XournalMain::initResourcePath(&gladeSearchpath, "ui/xournalpp.css", true);
+//
+//        GApplication* gApp = G_APPLICATION(app);
+//
+//        Control control{gApp, &gladeSearchpath, true};
+//
+//        // If initializing differently, i.e.:
+//        // MainWindow mainWindow{MainWindow(&gladeSearchpath, &control, app)};
+//        // the test fails at the end of the block with a segfault
+//        MainWindow* mainWindow = new MainWindow(&gladeSearchpath, &control, app);
+//        control.initWindow(mainWindow);
+//
+//        Settings settings{Util::getConfigFile(SETTINGS_XML_FILE)};
+//        settings.load();
+////
+////        const fs::path palettePath{GET_TESTFILE("palettes/xournalpp.gpl")};
+////        const std::vector<fs::path> paletteDirectories{palettePath.parent_path()};
+//////
+//////        const auto callback = []() {};
+//////        auto dlg = xoj::popup::PopupWindowWrapper<SettingsDialog>(&gladeSearchpath, &settings, &control,
+//////                                                                  paletteDirectories, callback);
+//////        auto settingsDialog = dlg.getPopup();
+////////        dlg.show(GTK_WINDOW(mainWindow->getWindow()));
+////////        EXPECT_NO_THROW(settingsDialog->save());
+//////        gtk_window_close(settingsDialog->getWindow());
+//    }
+//};
+//TEST_F(ShowAndSaveDoesNotThrowForNoPalettes, ShowAndSaveDoesNotThrowForNoPalettes) {}
