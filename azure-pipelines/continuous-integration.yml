@@ -39,7 +39,7 @@ stages:
               cmake --build . --target test-gtk-integration
               CI=true xvfb-run -a ./test/test-gtk-integration
             workingDirectory: ./build
-            displayName: 'Run tests'
+            displayName: 'Run gtk-integration tests'
 
       - job: 'Windows'
         pool:
