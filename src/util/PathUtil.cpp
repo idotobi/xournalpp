@@ -316,6 +316,9 @@ auto Util::getDataPath() -> fs::path {
     fs::path p = Stacktrace::getExePath().parent_path();
     if (fs::exists(p / "Resources")) {
         p = p / "Resources";
+    } else {
+        p = PACKAGE_DATA_DIR;
+        p /= PROJECT_NAME;
     }
     return p;
 #else
@@ -326,13 +329,14 @@ auto Util::getDataPath() -> fs::path {
 }
 
 auto Util::getLocalePath() -> fs::path {
-#ifdef _WIN32
-    return getDataPath() / ".." / "locale";
-#elif defined(__APPLE__)
-    return getDataPath() / "share" / "locale";
-#else
-    return getDataPath() / ".." / "locale";
+#ifdef __APPLE__
+    fs::path p = Stacktrace::getExePath().parent_path();
+    if (fs::exists(p / "Resources")) {
+        return p / "Resources" / "share" / "locale";
+    }
 #endif
+
+    return getDataPath() / ".." / "locale";
 }
 
 auto Util::getPalettePath() -> fs::path { return getDataPath() / "palettes"; }
