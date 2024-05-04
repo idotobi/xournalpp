@@ -151,7 +151,7 @@ void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char*
                     auto it = item->createToolItem(horizontal);
                     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it.get()), -1);
 
-                    ToolitemDragDrop::attachMetadataColor(it.get(), dataItem.getId(), &namedColor, item.get());
+                    ToolitemDragDrop::attachMetadataColor(it.get(), dataItem.getId(), paletteIndex, item.get());
 
                     continue;
                 }
