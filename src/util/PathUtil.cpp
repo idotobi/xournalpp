@@ -339,7 +339,9 @@ auto Util::getLocalePath() -> fs::path {
     return getDataPath() / ".." / "locale";
 }
 
-auto Util::getPalettePath() -> fs::path { return getDataPath() / "palettes"; }
+auto Util::getBuiltInPaletteDirectoryPath() -> fs::path { return getDataPath() / "palettes"; }
+
+auto Util::getCustomPaletteDirectoryPath() -> fs::path { return getConfigSubfolder("palettes"); }
 
 auto Util::listFilesSorted(fs::path directory) -> std::vector<fs::path> {
     std::vector<fs::path> filePaths{};

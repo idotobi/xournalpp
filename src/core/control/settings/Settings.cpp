@@ -240,7 +240,7 @@ void Settings::loadDefault() {
     this->useSpacesForTab = false;
     this->numberOfSpacesForTab = 4;
 
-    this->colorPaletteSetting = Util::getPalettePath() / DEFAULT_PALETTE_FILE;
+    this->colorPaletteSetting = Util::getBuiltInPaletteDirectoryPath() / DEFAULT_PALETTE_FILE;
 }
 
 auto Settings::loadViewMode(ViewModeId mode) -> bool {

@@ -78,12 +78,12 @@ auto SettingsDialogPaletteTab::renderPaletteListBoxRow(GtkListBox* lb, const fs:
 }
 
 void SettingsDialogPaletteTab::renderColorPaletteExplainLabel() const {
-    gtk_label_set_label(colorPaletteExplainLabel,
-                        FS(_F("<i>The palettes shown below are obtained from:\n"
-                              "   - Built-in palettes: {1}\n"
-                              "   - User palettes: {2}.\n</i>") %
-                           pathLink(Util::getPalettePath()) % pathLink(Util::getConfigSubfolder("palettes")))
-                                .c_str());
+    gtk_label_set_label(colorPaletteExplainLabel, FS(_F("<i>The palettes shown below are obtained from:\n"
+                                                        "   - Built-in palettes: {1}\n"
+                                                        "   - User palettes: {2}.\n</i>") %
+                                                     pathLink(Util::getBuiltInPaletteDirectoryPath()) %
+                                                     pathLink(Util::getCustomPaletteDirectoryPath()))
+                                                          .c_str());
     gtk_label_set_use_markup(colorPaletteExplainLabel, true);
 }
 
