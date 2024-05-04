@@ -657,8 +657,6 @@ void SettingsDialog::load() {
             }
         }
 
-        paletteTab.renderPaletteTab(this->control->getPalette().getFilePath());
-
         this->audioOutputDevices = this->control->getAudioController()->getOutputDevices();
         gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(builder.get("cbAudioOutputDevice")), "", "System default");
         gtk_combo_box_set_active(GTK_COMBO_BOX(builder.get("cbAudioOutputDevice")), 0);
@@ -693,6 +691,7 @@ void SettingsDialog::load() {
     }
 
     this->latexPanel.load(settings->latexSettings);
+    paletteTab.renderPaletteTab(this->control->getPalette().getFilePath());
 }
 
 void SettingsDialog::save() {
