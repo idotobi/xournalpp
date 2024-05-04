@@ -88,13 +88,20 @@ void SettingsDialogPaletteTab::renderColorPaletteExplainLabel() const {
 }
 
 void SettingsDialogPaletteTab::renderNoPaletteFoundDisclaimer(GtkListBox* lb) {
+    GtkWidget* listBoxRow = gtk_list_box_row_new();
     GtkWidget* label = gtk_label_new("<span foreground=\"red\">"
                                      "No palette files (i.e. with extension .gpl) could be found.\n"
                                      "Using the default until another palette is configured."
                                      "</span>");
     gtk_label_set_use_markup(GTK_LABEL(label), true);
     gtk_widget_show(label);
-    gtk_list_box_prepend(lb, label);
+
+    gtk_container_add(GTK_CONTAINER(listBoxRow), label);
+    gtk_list_box_row_set_activatable(GTK_LIST_BOX_ROW(listBoxRow), FALSE);
+    gtk_list_box_row_set_selectable(GTK_LIST_BOX_ROW(listBoxRow), FALSE);
+    gtk_widget_show(listBoxRow);
+
+    gtk_list_box_prepend(lb, listBoxRow);
 }
 
 // use list of fs::path as input

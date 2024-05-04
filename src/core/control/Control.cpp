@@ -2392,6 +2392,12 @@ auto Control::loadPaletteFromSettings() -> void {
     auto newPalette = std::make_unique<Palette>(palettePath);
     this->palette = std::move(newPalette);
 
+    // If file does not exist there is no need to attempt parsing it
+    if (!fs::exists(this->palette->getFilePath())) {
+        this->palette->load_default();
+        return;
+    }
+
     try {
         this->palette->load();
     } catch (const std::exception& e) {
