@@ -20,20 +20,6 @@
 
 namespace xoj::popup {
 
-// setDarkModeCssClassBasedOnParent needs to be static to be called in callback on os theme changed signal
-static void setDarkModeCssClassBasedOnParent(const GtkWindow* popupWindow, const GtkWindow* parent) {
-    GtkStyleContext* parentStyleContext = gtk_widget_get_style_context(GTK_WIDGET(parent));
-    gboolean parentIsDarkMode = gtk_style_context_has_class(parentStyleContext, "darkMode");
-    // Here it goes wrong, hence the most likely cause is that the popupWindow is not what it seems
-    GtkStyleContext* thisContext = gtk_widget_get_style_context(GTK_WIDGET(popupWindow));
-
-    if (parentIsDarkMode) {
-        gtk_style_context_add_class(thisContext, "darkMode");
-    } else {
-        gtk_style_context_remove_class(thisContext, "darkMode");
-    }
-}
-
 /**
  * @brief The class PopupWindowWrapper allows a safe non-blocking creation and display of a popup window.
  * It shows the popup (upon a call to show()) and tasks a callback function to actually delete the popup once it has
@@ -55,13 +41,7 @@ public:
     void show(GtkWindow* parent) {
         gtk_window_set_transient_for(popup->getWindow(), parent);
         gtk_window_set_modal(popup->getWindow(), true);
-
-        setDarkModeCssClassBasedOnParent(popup->getWindow(), parent);
-        g_signal_connect(parent, "osThemeChanged", G_CALLBACK(+[](GtkWindow* parent, PopupType* popup) -> void {
-                             setDarkModeCssClassBasedOnParent(popup->getWindow(), parent);
-                             gtk_widget_queue_draw(GTK_WIDGET(popup->getWindow()));
-                         }),
-                         popup);
+        setDarkModeCssClassBasedOnParent(parent);
 
 #if GTK_MAJOR_VERSION == 3
         gtk_window_set_position(popup->getWindow(), GTK_WIN_POS_CENTER_ON_PARENT);
@@ -87,6 +67,17 @@ public:
          * The popup will get destroy by the signal connected above.
          */
         popup = nullptr;
+    }
+    void setDarkModeCssClassBasedOnParent(const GtkWindow* parent) const {
+        GtkStyleContext* parentStyleContext = gtk_widget_get_style_context(GTK_WIDGET(parent));
+        gboolean parentIsDarkMode = gtk_style_context_has_class(parentStyleContext, "darkMode");
+        GtkStyleContext* thisContext = gtk_widget_get_style_context(GTK_WIDGET(popup->getWindow()));
+
+        if (parentIsDarkMode) {
+            gtk_style_context_add_class(thisContext, "darkMode");
+        } else {
+            gtk_style_context_remove_class(thisContext, "darkMode");
+        }
     }
 
     PopupType* getPopup() const {

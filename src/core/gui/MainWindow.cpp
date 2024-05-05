@@ -122,14 +122,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     g_signal_connect(gtk_widget_get_settings(this->window), "notify::gtk-application-prefer-dark-theme",
                      G_CALLBACK(themeCallback), this);
 
-    // signal to PopupWindows that the os theme changed
-    g_signal_new("osThemeChanged", G_TYPE_FROM_INSTANCE(this->window), G_SIGNAL_RUN_LAST,
-                 0,                              // no class method associated with signal
-                 nullptr,                        // accumulator is not used
-                 nullptr,                        // accumulator is not used
-                 g_cclosure_marshal_VOID__VOID,  // no arguments to marshall
-                 G_TYPE_NONE,                    // callback returns void
-                 0);                             // no additional parameter types
     updateColorscheme();
 }
 
@@ -272,7 +264,6 @@ void MainWindow::updateColorscheme() {
             modifiedGtkSettingsTheme = true;
         }
     }
-    g_signal_emit_by_name(this->getWindow(), "osThemeChanged");
 
     {
         gchar* name = nullptr;
