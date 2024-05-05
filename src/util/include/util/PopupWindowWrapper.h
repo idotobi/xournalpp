@@ -41,7 +41,6 @@ public:
     void show(GtkWindow* parent) {
         gtk_window_set_transient_for(popup->getWindow(), parent);
         gtk_window_set_modal(popup->getWindow(), true);
-        setDarkModeCssClassBasedOnParent(parent);
 
 #if GTK_MAJOR_VERSION == 3
         gtk_window_set_position(popup->getWindow(), GTK_WIN_POS_CENTER_ON_PARENT);
@@ -67,17 +66,6 @@ public:
          * The popup will get destroy by the signal connected above.
          */
         popup = nullptr;
-    }
-    void setDarkModeCssClassBasedOnParent(const GtkWindow* parent) const {
-        GtkStyleContext* parentStyleContext = gtk_widget_get_style_context(GTK_WIDGET(parent));
-        gboolean parentIsDarkMode = gtk_style_context_has_class(parentStyleContext, "darkMode");
-        GtkStyleContext* thisContext = gtk_widget_get_style_context(GTK_WIDGET(popup->getWindow()));
-
-        if (parentIsDarkMode) {
-            gtk_style_context_add_class(thisContext, "darkMode");
-        } else {
-            gtk_style_context_remove_class(thisContext, "darkMode");
-        }
     }
 
     PopupType* getPopup() const {
