@@ -173,17 +173,6 @@ notebook frame>label {
     font-weight: bold;
 }
 
-/*
- * Labels only used for palette path information right now
- */
-.secondary-label {
-	color: #444;
-}
-
-window.darkMode .secondary-label {
-	color: #ddd;
-}
-
 
 /*
   Sidebar (page select, layer select, etc)
@@ -199,4 +188,3 @@ window.darkMode #sidebarContents {
 menubar, toolbar {
     -GtkWidget-window-dragging: false
 }
-
