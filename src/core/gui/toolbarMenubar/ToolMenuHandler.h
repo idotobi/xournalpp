@@ -23,8 +23,6 @@
 #include <gtk/gtk.h>      // for GtkWidget, GtkWindow, GtkBuilder
 
 #include "gui/IconNameHelper.h"  // for IconNameHelper
-#include "gui/toolbarMenubar/model/ColorPalette.h"
-#include "util/Color.h"  // for Color
 #include "util/raii/GObjectSPtr.h"
 
 class AbstractToolItem;
@@ -45,6 +43,7 @@ class ColorToolItem;
 struct ToolbarButtonEntry;
 class PageTypeSelectionPopover;
 class PageType;
+class Palette;
 class StylePopoverFactory;
 
 class ToolMenuHandler {

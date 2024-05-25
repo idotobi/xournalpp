@@ -129,7 +129,7 @@ struct Palette {
 
     fs::path const& getFilePath() const;
 
-    std::string getHeader(const std::string& attr);
+    std::string getHeader(const std::string& attr) const;
 
 
 private:

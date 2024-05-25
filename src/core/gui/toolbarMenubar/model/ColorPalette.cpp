@@ -54,9 +54,10 @@ auto Palette::load_default() -> void {
     }
 }
 
-auto Palette::getHeader(const std::string& attr) -> std::string {
-    if (header.find(attr) == header.end())
+auto Palette::getHeader(const std::string& attr) const -> std::string {
+    if (header.find(attr) == header.end()) {
         return std::string{};
+    }
     return header.at(attr);
 }
 
