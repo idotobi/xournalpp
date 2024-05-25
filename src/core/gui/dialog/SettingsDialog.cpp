@@ -1037,12 +1037,7 @@ void SettingsDialog::save() {
 
     const std::optional<std::filesystem::path> selectedPalette = paletteTab.getSelectedPalette();
     if (selectedPalette.has_value()) {
-        if(selectedPalette.value() != settings->getColorPaletteSetting()) {
-            settings->setColorPaletteSetting(selectedPalette.value());
-            this->control->loadPaletteFromSettings();
-            this->control->getWindow()->getToolMenuHandler()->updateColorToolItems(this->control->getPalette());
-            this->control->getWindow()->reloadToolbars();
-        }
+        settings->setColorPaletteSetting(selectedPalette.value());
     }
 
     for (auto& deviceClassConfigGui: this->deviceClassConfigs) {

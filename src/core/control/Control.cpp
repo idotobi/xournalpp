@@ -1208,17 +1208,21 @@ void Control::showSettings() {
         StylusCursorType stylusCursorType;
         bool highlightPosition;
         SidebarNumberingStyle sidebarStyle;
-    } callbackData = {settings->getBorderColor(),
-                      settings->getAddVerticalSpace(),
-                      settings->getAddVerticalSpaceAmountAbove(),
-                      settings->getAddVerticalSpaceAmountBelow(),
-                      settings->getAddHorizontalSpace(),
-                      settings->getAddHorizontalSpaceAmountRight(),
-                      settings->getAddHorizontalSpaceAmountLeft(),
-                      settings->getUnlimitedScrolling(),
-                      settings->getStylusCursorType(),
-                      settings->isHighlightPosition(),
-                      settings->getSidebarNumberingStyle()};
+        std::optional<std::filesystem::path> colorPaletteSetting;
+    } callbackData = {
+            settings->getBorderColor(),
+            settings->getAddVerticalSpace(),
+            settings->getAddVerticalSpaceAmountAbove(),
+            settings->getAddVerticalSpaceAmountBelow(),
+            settings->getAddHorizontalSpace(),
+            settings->getAddHorizontalSpaceAmountRight(),
+            settings->getAddHorizontalSpaceAmountLeft(),
+            settings->getUnlimitedScrolling(),
+            settings->getStylusCursorType(),
+            settings->isHighlightPosition(),
+            settings->getSidebarNumberingStyle(),
+            settings->getColorPaletteSetting(),
+    };
 
     auto dlg = xoj::popup::PopupWindowWrapper<SettingsDialog>(
             this->gladeSearchPath, settings, this,
@@ -1274,6 +1278,13 @@ void Control::showSettings() {
                 if (callbackData.stylusCursorType != settings->getStylusCursorType() ||
                     callbackData.highlightPosition != settings->isHighlightPosition()) {
                     ctrl->getCursor()->updateCursor();
+                }
+
+                if (callbackData.colorPaletteSetting.has_value() &&
+                    callbackData.colorPaletteSetting.value() != settings->getColorPaletteSetting()) {
+                    ctrl->loadPaletteFromSettings();
+                    ctrl->getWindow()->getToolMenuHandler()->updateColorToolItems(ctrl->getPalette());
+                    ctrl->getWindow()->reloadToolbars();
                 }
 
                 ctrl->getSidebar()->saveSize();
