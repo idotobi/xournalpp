@@ -16,10 +16,6 @@ auto colorize(const std::string& text, const std::string& color) -> std::string 
     return std::string{"<span foreground=\""} + color + std::string{"\">"} + text + std::string{"</span>"};
 }
 
-auto pathLink(const fs::path& path) -> std::string {
-    return FS(_F("<a href=\"file://{1}\">{1}</a>") % path.u8string());
-}
-
 void setGObjectPalettePath(GObject* gObject, const fs::path& path) {
     g_object_set_data(gObject, G_OBJECT_PALETTE_PATH, (gpointer)&path);
 }
@@ -27,6 +23,17 @@ void setGObjectPalettePath(GObject* gObject, const fs::path& path) {
 auto getGObjectPalettePath(GObject* gObject) -> fs::path {
     auto* pathPointer = (fs::path*)g_object_get_data(gObject, G_OBJECT_PALETTE_PATH);
     return *pathPointer;
+}
+
+auto getDisplayPalettePath(const fs::path& path) -> std::string {
+    if (path.parent_path() == Util::getBuiltInPaletteDirectoryPath()) {
+        return std::string{"└─ "} + "<i>" + FS(_F("Built-in palettes")) + "/</i> " + path.filename().u8string();
+    } else if (path.parent_path() == Util::getCustomPaletteDirectoryPath()) {
+        return std::string{"└─ "} + "<i>" + FS(_F("User palettes")) + "/</i> " + path.filename().u8string();
+    } else {
+        g_warning("Unexpected type of palette path encountered %s", path.parent_path().u8string().c_str());
+        return std::string{"└─ "} + path.u8string();
+    }
 }
 
 
@@ -85,21 +92,23 @@ auto SettingsDialogPaletteTab::renderPaletteListBoxRow(GtkListBox* lb, const fs:
 }
 
 void SettingsDialogPaletteTab::renderColorPaletteExplainLabel() const {
-    gtk_label_set_label(colorPaletteExplainLabel, FS(_F("<i>The palettes shown below are obtained from:\n"
-                                                        "   - Built-in palettes: {1}\n"
-                                                        "   - User palettes: {2}.\n</i>") %
-                                                     pathLink(Util::getBuiltInPaletteDirectoryPath()) %
-                                                     pathLink(Util::getCustomPaletteDirectoryPath()))
+    gtk_label_set_label(colorPaletteExplainLabel, FS(_F("<i>The palettes shown below are obtained from the "
+                                                        "<a href=\"file://{1}\">Built-in palettes</a> and "
+                                                        "<a href=\"file://{2}\">User palettes</a> directories:</i>\n") %
+                                                     Util::getBuiltInPaletteDirectoryPath().u8string() %
+                                                     Util::getCustomPaletteDirectoryPath().u8string())
                                                           .c_str());
+    gtk_label_set_wrap(colorPaletteExplainLabel, true);
     gtk_label_set_use_markup(colorPaletteExplainLabel, true);
 }
 
 void SettingsDialogPaletteTab::renderNoPaletteFoundDisclaimer(GtkListBox* lb) {
     GtkWidget* listBoxRow = gtk_list_box_row_new();
-    GtkWidget* label = gtk_label_new("<span foreground=\"red\">"
-                                     "No palette files (i.e. with extension .gpl) could be found.\n"
-                                     "Using the default until another palette is configured."
-                                     "</span>");
+    GtkWidget* label = gtk_label_new(("<span foreground=\"red\">" +
+                                      FS(_F("No palette files (i.e. with extension .gpl) could be found.\n"
+                                            "Using the default until another palette is configured.")) +
+                                      "</span>")
+                                             .c_str());
     gtk_label_set_use_markup(GTK_LABEL(label), true);
 
     gtk_list_box_append(GTK_LIST_BOX(listBoxRow), label);
@@ -138,7 +147,7 @@ auto SettingsDialogPaletteTab::newErrorListBoxRow(const fs::path& palettePath, c
     GtkWidget* rowContent = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
     gtk_list_box_append(GTK_LIST_BOX(listBoxRow), rowContent);
 
-    std::string const formattedError = colorize("Error: " + error, "red");
+    std::string const formattedError = colorize(FS(_F("Error")) + ": " + error, "red");
     GtkWidget* text = newPaletteTextBox(formattedError, palettePath);
     gtk_box_append(GTK_BOX(rowContent), text);
 
@@ -150,10 +159,10 @@ auto SettingsDialogPaletteTab::newPaletteListBoxRow(Palette& palette) -> GtkWidg
     GtkWidget* rowContent = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
     gtk_list_box_append(GTK_LIST_BOX(listBoxRow), rowContent);
 
-    std::string const paletteName = palette.getHeader(std::string{"Name"});
+    std::string const paletteName = palette.getHeader(std::string{FS(_F("Name"))});
     GtkWidget* text = nullptr;
     if (paletteName.empty())
-        text = newPaletteTextBox(std::string{"<i>Palette has no Name</i>"}, palette.getFilePath());
+        text = newPaletteTextBox(std::string{"<i>" + FS(_F("Palette has no Name")) + "</i>"}, palette.getFilePath());
     else
         text = newPaletteTextBox(paletteName, palette.getFilePath().u8string());
     gtk_box_append(GTK_BOX(rowContent), text);
@@ -173,8 +182,7 @@ auto SettingsDialogPaletteTab::newPaletteTextBox(const std::string& mainContent,
     gtk_label_set_use_markup(GTK_LABEL(mainLabel), true);
     gtk_box_append(GTK_BOX(textBox), mainLabel);
 
-    std::string const secondaryInformation = std::string{"└─ "} + path.u8string();
-    GtkWidget* secondaryLabel = gtk_label_new(secondaryInformation.c_str());
+    GtkWidget* secondaryLabel = gtk_label_new(getDisplayPalettePath(path).c_str());
     gtk_widget_set_halign(secondaryLabel, GTK_ALIGN_START);
     gtk_label_set_use_markup(GTK_LABEL(secondaryLabel), true);
     gtk_box_append(GTK_BOX(textBox), secondaryLabel);
