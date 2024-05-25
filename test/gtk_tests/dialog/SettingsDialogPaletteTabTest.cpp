@@ -24,8 +24,8 @@ void createAndSetupWidgets(GtkApplication* app, GtkGrid** grid, GtkLabel** mainL
 
     *mainLabel = GTK_LABEL(gtk_label_new(""));
     *optionsList = GTK_LIST_BOX(gtk_list_box_new());
-    gtk_grid_attach(*grid,  GTK_WIDGET(*mainLabel), 0, 0, 1, 1);
-    gtk_grid_attach(*grid,  GTK_WIDGET(*optionsList), 0, 1, 1, 1);
+    gtk_grid_attach(*grid, GTK_WIDGET(*mainLabel), 0, 0, 1, 1);
+    gtk_grid_attach(*grid, GTK_WIDGET(*optionsList), 0, 1, 1, 1);
 }
 
 class UnrenderedPaletteTabTest: public GtkTest {
