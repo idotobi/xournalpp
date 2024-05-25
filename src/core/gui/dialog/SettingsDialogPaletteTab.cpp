@@ -54,6 +54,7 @@ void SettingsDialogPaletteTab::renderPaletteTab(const fs::path& currentlySetPale
         if (p == currentlySetPalettePath)
             gtk_list_box_select_row(GTK_LIST_BOX(lb), GTK_LIST_BOX_ROW(listBoxRow));
     }
+    gtk_widget_show_all(GTK_WIDGET(lb));
 }
 
 
@@ -94,12 +95,10 @@ void SettingsDialogPaletteTab::renderNoPaletteFoundDisclaimer(GtkListBox* lb) {
                                      "Using the default until another palette is configured."
                                      "</span>");
     gtk_label_set_use_markup(GTK_LABEL(label), true);
-    gtk_widget_show(label);
 
     gtk_container_add(GTK_CONTAINER(listBoxRow), label);
     gtk_list_box_row_set_activatable(GTK_LIST_BOX_ROW(listBoxRow), FALSE);
     gtk_list_box_row_set_selectable(GTK_LIST_BOX_ROW(listBoxRow), FALSE);
-    gtk_widget_show(listBoxRow);
 
     gtk_list_box_prepend(lb, listBoxRow);
 }
@@ -137,9 +136,6 @@ auto SettingsDialogPaletteTab::newErrorListBoxRow(const fs::path& palettePath, c
     GtkWidget* text = newPaletteTextBox(formattedError, palettePath);
     gtk_box_pack_start(GTK_BOX(rowContent), text, false, false, 0);
 
-    gtk_widget_show(rowContent);
-    gtk_widget_show(listBoxRow);
-
     return listBoxRow;
 }
 
@@ -159,28 +155,22 @@ auto SettingsDialogPaletteTab::newPaletteListBoxRow(Palette& palette) -> GtkWidg
     GtkWidget* colorIcons = newPaletteColorIconsBox(palette);
     gtk_box_pack_start(GTK_BOX(rowContent), colorIcons, true, true, 0);
 
-    gtk_widget_show(rowContent);
-    gtk_widget_show(listBoxRow);
-
     return listBoxRow;
 }
 
 auto SettingsDialogPaletteTab::newPaletteTextBox(const std::string& mainContent, const fs::path& path) -> GtkWidget* {
     GtkWidget* textBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 3);
-    gtk_widget_show(textBox);
 
     GtkWidget* mainLabel = gtk_label_new(mainContent.c_str());
     gtk_widget_set_halign(mainLabel, GTK_ALIGN_START);
     gtk_label_set_use_markup(GTK_LABEL(mainLabel), true);
     gtk_box_pack_start(GTK_BOX(textBox), mainLabel, false, false, 0);
-    gtk_widget_show(mainLabel);
 
     std::string const secondaryInformation = std::string{"└─ "} + path.u8string();
     GtkWidget* secondaryLabel = gtk_label_new(secondaryInformation.c_str());
     gtk_widget_set_halign(secondaryLabel, GTK_ALIGN_START);
     gtk_label_set_use_markup(GTK_LABEL(secondaryLabel), true);
     gtk_box_pack_start(GTK_BOX(textBox), secondaryLabel, false, false, 0);
-    gtk_widget_show(secondaryLabel);
 
     return textBox;
 }
@@ -191,10 +181,8 @@ auto SettingsDialogPaletteTab::newPaletteColorIconsBox(const Palette& palette) -
         const NamedColor& namedColor = palette.getColorAt(i);
         const Color c = namedColor.getColor();
         GtkWidget* icon = ColorIcon::newGtkImage(c, 16, true);
-        gtk_widget_show(icon);
         gtk_box_pack_start(GTK_BOX(colors), icon, false, false, 0);
     }
-    gtk_widget_show(colors);
     gtk_widget_set_halign(colors, GTK_ALIGN_END);
     return colors;
 }
