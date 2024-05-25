@@ -1037,7 +1037,12 @@ void SettingsDialog::save() {
 
     const std::optional<std::filesystem::path> selectedPalette = paletteTab.getSelectedPalette();
     if (selectedPalette.has_value()) {
-        settings->setColorPaletteSetting(selectedPalette.value());
+        if(selectedPalette.value() != settings->getColorPaletteSetting()) {
+            settings->setColorPaletteSetting(selectedPalette.value());
+            this->control->loadPaletteFromSettings();
+            this->control->getWindow()->getToolMenuHandler()->updateColorToolItems(this->control->getPalette());
+            this->control->getWindow()->reloadToolbars();
+        }
     }
 
     for (auto& deviceClassConfigGui: this->deviceClassConfigs) {
@@ -1049,9 +1054,6 @@ void SettingsDialog::save() {
     settings->transactionEnd();
 
     this->control->getWindow()->setGtkTouchscreenScrollingForDeviceMapping();
-    this->control->loadPaletteFromSettings();
-    this->control->getWindow()->getToolMenuHandler()->updateColorToolItems(this->control->getPalette());
-    this->control->getWindow()->reloadToolbars();
 
     this->control->initButtonTool();
     this->control->getWindow()->getXournal()->onSettingsChanged();
