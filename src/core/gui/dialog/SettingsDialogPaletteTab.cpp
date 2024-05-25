@@ -34,9 +34,15 @@ auto getGObjectPalettePath(GObject* gObject) -> fs::path {
 // Public Methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-SettingsDialogPaletteTab::SettingsDialogPaletteTab(GtkLabel* colorPaletteExplainLabel, GtkListBox* paletteListBox,
+constexpr auto UI_FILE = "paletteSettings.glade";
+constexpr auto UI_PANEL_NAME = "paletteSettingsPanel";
+
+SettingsDialogPaletteTab::SettingsDialogPaletteTab(GladeSearchpath* gladeSearchPath,
                                                    const std::vector<fs::path>& paletteDirectories):
-        colorPaletteExplainLabel{colorPaletteExplainLabel}, paletteListBox{paletteListBox} {
+        builder(gladeSearchPath, UI_FILE) {
+    colorPaletteExplainLabel = GTK_LABEL(builder.get("colorPaletteExplainLabel"));
+    paletteListBox = GTK_LIST_BOX(builder.get("paletteListBox"));
+    panel = GTK_SCROLLED_WINDOW(builder.get(UI_PANEL_NAME));
     renderColorPaletteExplainLabel();
     setAllPaletteFilePaths(paletteDirectories);
 }

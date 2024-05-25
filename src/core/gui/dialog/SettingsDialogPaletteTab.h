@@ -7,19 +7,22 @@
 
 #include <gtk/gtk.h>
 
+#include "gui/Builder.h"
 #include "gui/GladeGui.h"
 #include "gui/toolbarMenubar/model/ColorPalette.h"
 class SettingsDialogPaletteTab {
 public:
-    SettingsDialogPaletteTab(GtkLabel* colorPaletteExplainLabel, GtkListBox* paletteListBox,
-                             const std::vector<fs::path>& paletteDirectories);
+    SettingsDialogPaletteTab(GladeSearchpath* gladeSearchPath, const std::vector<fs::path>& paletteDirectories);
     void renderPaletteTab(const fs::path& currentlySetPalettePath);
     auto getSelectedPalette() -> std::optional<fs::path>;
+    inline GtkWidget* getPanel() const { return GTK_WIDGET(panel); }
 
 private:
     std::vector<fs::path> allPaletteFilePaths;
     GtkLabel* colorPaletteExplainLabel;
     GtkListBox* paletteListBox;
+    Builder builder;
+    GtkScrolledWindow* panel;
 
     void setAllPaletteFilePaths(const std::vector<fs::path>& paletteDirectories);
     void renderColorPaletteExplainLabel() const;

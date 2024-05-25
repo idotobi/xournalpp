@@ -9,7 +9,9 @@
  * @license GNU GPLv2 or later
  */
 
+#include "gui/GladeSearchpath.h"
 #include "gui/dialog/SettingsDialogPaletteTab.h"
+#include "util/Stacktrace.h"
 
 #include "GtkTest.h"
 #include "config-test.h"
@@ -35,8 +37,10 @@ class UnrenderedPaletteTabTest: public GtkTest {
 
         const fs::path palettePath{GET_TESTFILE("palettes/xournalpp.gpl")};
 
+        GladeSearchpath gladeSearchPath{};
+        gladeSearchPath.addSearchDirectory(Stacktrace::getExePath().parent_path() / "../install/share/xournalpp/ui");
         const std::vector<fs::path> paletteDirectories{palettePath.parent_path()};
-        SettingsDialogPaletteTab paletteTab{mainLabel, optionsList, paletteDirectories};
+        SettingsDialogPaletteTab paletteTab{&gladeSearchPath, paletteDirectories};
         EXPECT_EQ(paletteTab.getSelectedPalette(), std::nullopt);
     }
 };
@@ -51,8 +55,10 @@ class RenderedPaletteTabTest: public GtkTest {
 
         const fs::path palettePath{GET_TESTFILE("palettes/xournalpp.gpl")};
 
+        GladeSearchpath gladeSearchPath{};
+        gladeSearchPath.addSearchDirectory(Stacktrace::getExePath().parent_path() / "../install/share/xournalpp/ui");
         const std::vector<fs::path> paletteDirectories{palettePath.parent_path()};
-        SettingsDialogPaletteTab paletteTab{mainLabel, optionsList, paletteDirectories};
+        SettingsDialogPaletteTab paletteTab{&gladeSearchPath, paletteDirectories};
         paletteTab.renderPaletteTab(palettePath);
         EXPECT_EQ(palettePath.u8string(), paletteTab.getSelectedPalette().value().u8string());
     }

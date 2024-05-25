@@ -52,8 +52,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
         window(GTK_WINDOW(builder.get(UI_DIALOG_NAME))),
         languageConfig(gladeSearchPath, builder.get("hboxLanguageSelect"), settings),
         latexPanel(gladeSearchPath),
-        paletteTab(GTK_LABEL(builder.get("colorPaletteExplainLabel")), GTK_LIST_BOX(builder.get("paletteListBox")),
-                   paletteDirectories),
+        paletteTab(gladeSearchPath, paletteDirectories),
         callback(callback) {
 
     gtk_box_append(GTK_BOX(builder.get("zoomVBox")), callib);
@@ -80,6 +79,8 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
     }
 
     gtk_box_append(GTK_BOX(builder.get("latexTabBox")), this->latexPanel.getPanel());
+    gtk_box_append(GTK_BOX(builder.get("paletteTabBox")), this->paletteTab.getPanel());
+
 
     g_signal_connect(builder.get("zoomCallibSlider"), "change-value",
                      G_CALLBACK(+[](GtkRange*, GtkScrollType, gdouble value, SettingsDialog* self) {
