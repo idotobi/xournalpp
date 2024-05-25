@@ -1262,17 +1262,17 @@ void Control::showSettings() {
                                     -xUnlimited + (settingsBeforeDialog.horizontalSpace ?
                                                            settingsBeforeDialog.horizontalSpaceAmountLeft :
                                                            0) :
-                                    xUnlimited -
-                                            (settingsBeforeDialog.horizontalSpace ?
-                                                          settingsBeforeDialog.horizontalSpaceAmountLeft : 0);
+                                    xUnlimited - (settingsBeforeDialog.horizontalSpace ?
+                                                          settingsBeforeDialog.horizontalSpaceAmountLeft :
+                                                          0);
                     const double yChange =
                             settingsBeforeDialog.unlimitedScrolling ?
-                                    -yUnlimited +
-                                            (settingsBeforeDialog.verticalSpace ?
-                                                           settingsBeforeDialog.verticalSpaceAmountAbove : 0) :
-                                    yUnlimited -
-                                            (settingsBeforeDialog.verticalSpace ?
-                                                          settingsBeforeDialog.verticalSpaceAmountAbove : 0);
+                                    -yUnlimited + (settingsBeforeDialog.verticalSpace ?
+                                                           settingsBeforeDialog.verticalSpaceAmountAbove :
+                                                           0) :
+                                    yUnlimited - (settingsBeforeDialog.verticalSpace ?
+                                                          settingsBeforeDialog.verticalSpaceAmountAbove :
+                                                          0);
 
                     xournal->layoutPages();
                     win->getLayout()->scrollRelative(xChange, yChange);
