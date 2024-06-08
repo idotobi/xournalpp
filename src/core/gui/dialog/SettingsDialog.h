@@ -40,9 +40,9 @@ public:
                    const std::vector<fs::path>& paletteDirectories, std::function<void()> callback);
 
     inline GtkWindow* getWindow() const { return window.get(); }
-    void save();
 
 private:
+    void save();
     void setDpi(int dpi);
 
     /**

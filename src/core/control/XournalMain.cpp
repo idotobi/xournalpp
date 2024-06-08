@@ -71,6 +71,8 @@ auto migrateSettings() -> MigrateResult;
 void checkForErrorlog();
 void checkForEmergencySave(Control* control);
 
+void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFile, bool failIfNotFound = true);
+
 void initCAndCoutLocales() {
     /**
      * Force numbers to be printed out and parsed by C libraries (cairo) in the "classic" locale.
@@ -414,6 +416,37 @@ auto findResourcePath(const fs::path& searchFile) -> fs::path {
     return {};
 }
 
+void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFile, bool failIfNotFound) {
+    auto uiPath = findResourcePath(relativePathAndFile);  // i.e.  relativePathAndFile = "ui/about.glade"
+
+    if (!uiPath.empty()) {
+        gladePath->addSearchDirectory(uiPath);
+        return;
+    }
+
+    // -----------------------------------------------------------------------
+
+    fs::path p = Util::getDataPath();
+    p /= relativePathAndFile;
+
+    if (fs::exists(p)) {
+        gladePath->addSearchDirectory(p.parent_path());
+        return;
+    }
+
+    std::string msg =
+            FS(_F("<span foreground='red' size='x-large'>Missing the needed UI file:\n<b>{1}</b></span>\nCould "
+                  "not find them at any location.\n  Not relative\n  Not in the Working Path\n  Not in {2}") %
+               relativePathAndFile % Util::getDataPath().string());
+
+    if (!failIfNotFound) {
+        msg += _("\n\nWill now attempt to run without this file.");
+        XojMsgBox::showErrorToUser(nullptr, msg);
+    } else {
+        XojMsgBox::showErrorAndQuit(msg, 12);
+    }
+}
+
 void on_activate(GApplication*, XMPtr) {}
 
 void on_command_line(GApplication*, GApplicationCommandLine*, XMPtr) {
@@ -454,8 +487,8 @@ void on_startup(GApplication* application, XMPtr app_data) {
     const MigrateResult migrateResult = migrateSettings();
 
     app_data->gladePath = std::make_unique<GladeSearchpath>();
-    XournalMain::initResourcePath(app_data->gladePath.get(), "ui/about.glade");
-    XournalMain::initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
+    initResourcePath(app_data->gladePath.get(), "ui/about.glade");
+    initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
 
     app_data->control = std::make_unique<Control>(application, app_data->gladePath.get(), app_data->disableAudio);
 
@@ -697,36 +730,4 @@ auto XournalMain::run(int argc, char** argv) -> int {
     auto rv = g_application_run(G_APPLICATION(app), argc, argv);
     g_object_unref(app);
     return rv;
-}
-
-void XournalMain::initResourcePath(GladeSearchpath* gladePath, std::string_view relativePathAndFile,
-                                   bool failIfNotFound) {
-    auto uiPath = findResourcePath(relativePathAndFile);  // i.e.  relativePathAndFile = "ui/about.glade"
-
-    if (!uiPath.empty()) {
-        gladePath->addSearchDirectory(uiPath);
-        return;
-    }
-
-    // -----------------------------------------------------------------------
-
-    fs::path p = Util::getDataPath();
-    p /= relativePathAndFile;
-
-    if (fs::exists(p)) {
-        gladePath->addSearchDirectory(p.parent_path());
-        return;
-    }
-
-    std::string msg =
-            FS(_F("<span foreground='red' size='x-large'>Missing the needed UI file:\n<b>{1}</b></span>\nCould "
-                  "not find them at any location.\n  Not relative\n  Not in the Working Path\n  Not in {2}") %
-               relativePathAndFile % Util::getDataPath().string());
-
-    if (!failIfNotFound) {
-        msg += _("\n\nWill now attempt to run without this file.");
-        XojMsgBox::showErrorToUser(nullptr, msg);
-    } else {
-        XojMsgBox::showErrorAndQuit(msg, 12);
-    }
 }
