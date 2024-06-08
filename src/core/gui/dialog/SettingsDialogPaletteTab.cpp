@@ -64,8 +64,9 @@ void SettingsDialogPaletteTab::renderPaletteTab(const fs::path& currentlySetPale
     for (const fs::path& p: allPaletteFilePaths) {
         GtkWidget* listBoxRow = renderPaletteListBoxRow(lb, p);
 
-        if (p == currentlySetPalettePath)
+        if (p == currentlySetPalettePath) {
             gtk_list_box_select_row(GTK_LIST_BOX(lb), GTK_LIST_BOX_ROW(listBoxRow));
+        }
     }
     gtk_widget_show_all(GTK_WIDGET(lb));
 }
@@ -130,13 +131,13 @@ void SettingsDialogPaletteTab::setAllPaletteFilePaths(const std::vector<fs::path
     }
 }
 
-auto SettingsDialogPaletteTab::getSelectedPalette() -> std::optional<fs::path> {
+auto SettingsDialogPaletteTab::getSelectedPalette() const -> std::optional<fs::path> {
     GtkListBoxRow* selected_listbox_row = gtk_list_box_get_selected_row(paletteListBox);
     if (allPaletteFilePaths.empty()) {
-        return {};
+        return std::nullopt;
     }
     if (!G_IS_OBJECT(selected_listbox_row)) {
-        return {};
+        return std::nullopt;
     }
 
     return getGObjectPalettePath(G_OBJECT(selected_listbox_row));
@@ -161,10 +162,11 @@ auto SettingsDialogPaletteTab::newPaletteListBoxRow(Palette& palette) -> GtkWidg
 
     std::string const paletteName = palette.getHeader(std::string{FS(_F("Name"))});
     GtkWidget* text = nullptr;
-    if (paletteName.empty())
+    if (paletteName.empty()) {
         text = newPaletteTextBox(std::string{"<i>" + FS(_F("Palette has no Name")) + "</i>"}, palette.getFilePath());
-    else
+    } else {
         text = newPaletteTextBox(paletteName, palette.getFilePath().u8string());
+    }
     gtk_box_append(GTK_BOX(rowContent), text);
 
     GtkWidget* colorIcons = newPaletteColorIconsBox(palette);

@@ -97,9 +97,7 @@ void ToolMenuHandler::unloadToolbar(GtkWidget* toolbar) {
 
 void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal) {
     int count = 0;
-
     const auto palette = this->control->getPalette();
-    size_t colorIndex{};
 
     for (const ToolbarEntry& e: d->contents) {
         if (e.getName() == toolbarName) {

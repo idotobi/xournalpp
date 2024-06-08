@@ -14,7 +14,7 @@ class SettingsDialogPaletteTab {
 public:
     SettingsDialogPaletteTab(GladeSearchpath* gladeSearchPath, const std::vector<fs::path>& paletteDirectories);
     void renderPaletteTab(const fs::path& currentlySetPalettePath);
-    auto getSelectedPalette() -> std::optional<fs::path>;
+    auto getSelectedPalette() const -> std::optional<fs::path>;
     inline GtkWidget* getPanel() const { return GTK_WIDGET(panel); }
 
 private:
