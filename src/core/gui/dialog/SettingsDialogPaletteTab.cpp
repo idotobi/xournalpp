@@ -111,7 +111,7 @@ void SettingsDialogPaletteTab::renderNoPaletteFoundDisclaimer(GtkListBox* lb) {
                                              .c_str());
     gtk_label_set_use_markup(GTK_LABEL(label), true);
 
-    gtk_list_box_append(GTK_LIST_BOX(listBoxRow), label);
+    gtk_list_box_row_set_child(GTK_LIST_BOX_ROW(listBoxRow), label);
     gtk_list_box_row_set_activatable(GTK_LIST_BOX_ROW(listBoxRow), FALSE);
     gtk_list_box_row_set_selectable(GTK_LIST_BOX_ROW(listBoxRow), FALSE);
 
@@ -145,7 +145,7 @@ auto SettingsDialogPaletteTab::getSelectedPalette() -> std::optional<fs::path> {
 auto SettingsDialogPaletteTab::newErrorListBoxRow(const fs::path& palettePath, const std::string& error) -> GtkWidget* {
     GtkWidget* listBoxRow = gtk_list_box_row_new();
     GtkWidget* rowContent = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
-    gtk_list_box_append(GTK_LIST_BOX(listBoxRow), rowContent);
+    gtk_list_box_row_set_child(GTK_LIST_BOX_ROW(listBoxRow), rowContent);
 
     std::string const formattedError = colorize(FS(_F("Error")) + ": " + error, "red");
     GtkWidget* text = newPaletteTextBox(formattedError, palettePath);
@@ -157,7 +157,7 @@ auto SettingsDialogPaletteTab::newErrorListBoxRow(const fs::path& palettePath, c
 auto SettingsDialogPaletteTab::newPaletteListBoxRow(Palette& palette) -> GtkWidget* {
     GtkWidget* listBoxRow = gtk_list_box_row_new();
     GtkWidget* rowContent = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
-    gtk_list_box_append(GTK_LIST_BOX(listBoxRow), rowContent);
+    gtk_list_box_row_set_child(GTK_LIST_BOX_ROW(listBoxRow), rowContent);
 
     std::string const paletteName = palette.getHeader(std::string{FS(_F("Name"))});
     GtkWidget* text = nullptr;
